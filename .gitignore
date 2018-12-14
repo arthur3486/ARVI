@@ -1,0 +1,15 @@
+*.iml
+.gradle
+/arvi/build
+/arvi-adapster/build
+/arvi-ktx/build
+/arvi-utils/build
+/local.properties
+/.idea/caches/build_file_checksum.ser
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild

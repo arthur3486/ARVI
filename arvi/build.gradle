@@ -1,0 +1,58 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.compileSdk
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdk
+        targetSdkVersion rootProject.targetSdk
+        versionCode rootProject.releaseVersionCode
+        versionName rootProject.releaseVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "LIBRARY_NAME", "\"ARVI-$releaseVersion\"")
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "androidx.appcompat:appcompat:${rootProject.supportLibraryVersion}"
+    implementation "androidx.recyclerview:recyclerview:${rootProject.recyclerViewVersion}"
+
+    // Exo player related
+    implementation "com.google.android.exoplayer:exoplayer:${rootProject.exoPlayerVersion}"
+
+    testImplementation "junit:junit:${rootProject.jUnitVersion}"
+    androidTestImplementation "androidx.test:runner:${rootProject.testRunnerVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${rootProject.espressoVersion}"
+}
+
+ext {
+    releaseArtifact = "arvi"
+    releaseDescription = ""
+}
+
+project.archivesBaseName = "arvi"
+
+apply from: "../common/constants.gradle"
+apply from: '../gradle/script/publish.gradle'

@@ -1,0 +1,38 @@
+
+
+project.ext {
+    compileSdk = 28
+    targetSdk = 27
+    minSdk = 18
+
+    supportLibraryVersion = "1.0.2"
+    robolectricVersion = "4.0-alpha-3-SNAPSHOT"
+    jUnitVersion = "4.12"
+    testRunnerVersion = "1.1.1"
+    espressoVersion = "3.1.1"
+    recyclerViewVersion = "1.0.0"
+    constraintLayoutVersion = "1.1.3"
+    exoPlayerVersion = "2.9.2"
+    adapsterVersion = "1.0.6"
+
+    releaseRepoName = "maven"
+    releaseUserOrg = "arthurlabs"
+    releaseGroupId = "com.arthurivanets.arvi"
+    releaseVersion = "1.0.0"
+    releaseVersionCode = 19
+    releaseWebsite = "https://github.com/arthur3486/ARVI"
+    releaseLicense = ["Apache-2.0"]
+
+    licenseName = "The Apache Software License, Version 2.0"
+    licenseUrl = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+    allLicenses = ["Apache-2.0"]
+
+    developerId = "arthur3486"
+    developerName = "Arthur Ivanets"
+    developerEmail = "arthur.ivanets.l@gmail.com"
+
+    siteUrl = "https://github.com/arthur3486/ARVI"
+    gitUrl = "https://github.com/arthur3486/ARVI.git"
+    issueTracker = "https://github.com/arthur3486/ARVI/issues"
+    releaseNotesFile = "CHANGELOG.md"
+}
