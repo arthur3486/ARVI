@@ -14,20 +14,36 @@
  * limitations under the License.
  */
 
-package com.arthurivanets.arvi.utils.recyclerview;
+package com.arthurivanets.sample
 
-/**
- * A marker interface to be implemented by the concrete implementations of
- * the {@link androidx.recyclerview.widget.RecyclerView.LayoutManager}s in order
- * to provide the pre-caching support and the required apis.
- */
-public interface HasPreCachingSupport {
+import android.app.Application
+import com.arthurivanets.arvi.ktx.playerProvider
 
-    /**
-     * Sets the extra space that will be used for the view pre-creation & caching purposes.
-     *
-     * @param extraLayoutSpace in pixels (depends on the orientation and the type of the Layout Manager)
-     */
-    void setExtraLayoutSpace(int extraLayoutSpace);
+class ArviApplication : Application() {
+
+
+    companion object {
+
+        @JvmStatic lateinit var INSTANCE : ArviApplication
+            private set
+
+    }
+
+
+    override fun onCreate() {
+        super.onCreate()
+
+        INSTANCE = this
+    }
+
+
+    override fun onTrimMemory(level : Int) {
+        super.onTrimMemory(level)
+
+        if(level >= TRIM_MEMORY_BACKGROUND) {
+            playerProvider.release()
+        }
+    }
+
 
 }

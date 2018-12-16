@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#000000</color>
+
+    <color name="default_grey_icon_color">#9296A6</color>
+
+    <color name="status_bar_color">#50000000</color>
+    <color name="status_bar_color_inverted">#15000000</color>
+
+    <color name="horizontal_drop_shadow_end_color">#15000000</color>
+
+    <color name="video_container_background_color">#000000</color>
+    <color name="video_item_title_text_color">#ffffff</color>
+    <color name="video_item_progress_bar_color">#ffffff</color>
+
+    <color name="horizontal_drop_shadow_inversed_start_color">#90000000</color>
+    <color name="horizontal_drop_shadow_inversed_center_color">#30000000</color>
+
+</resources>

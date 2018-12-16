@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.arthurivanets.arvi.widget.PlayableItemsRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/videos_recycler_view_padding_top"
+        android:paddingBottom="@dimen/videos_recycler_view_padding_bottom"
+        android:paddingLeft="@dimen/videos_recycler_view_padding_left"
+        android:paddingStart="@dimen/videos_recycler_view_padding_left"
+        android:paddingRight="@dimen/videos_recycler_view_padding_right"
+        android:paddingEnd="@dimen/videos_recycler_view_padding_right"
+        android:overScrollMode="never"
+        android:clipToPadding="false"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

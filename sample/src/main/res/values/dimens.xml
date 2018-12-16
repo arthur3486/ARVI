@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="top_bar_title_size">20sp</dimen>
+    <dimen name="top_bar_title_horizontal_spacing">8dp</dimen>
+
+    <dimen name="horizontal_drop_shadow_size">3dp</dimen>
+
+    <dimen name="videos_recycler_view_padding_top">15dp</dimen>
+    <dimen name="videos_recycler_view_padding_bottom">15dp</dimen>
+    <dimen name="videos_recycler_view_padding_left">15dp</dimen>
+    <dimen name="videos_recycler_view_padding_right">15dp</dimen>
+
+    <dimen name="video_item_card_corner_radius">8dp</dimen>
+    <dimen name="video_item_card_elevation">8dp</dimen>
+    <dimen name="video_item_title_text_size">16sp</dimen>
+    <dimen name="video_item_title_padding_top">10dp</dimen>
+    <dimen name="video_item_title_padding_bottom">10dp</dimen>
+    <dimen name="video_item_title_padding_left">10dp</dimen>
+    <dimen name="video_item_title_padding_right">58dp</dimen>
+    <dimen name="video_item_title_drawable_padding">5dp</dimen>
+    <dimen name="video_item_indicator_size">18dp</dimen>
+    <dimen name="video_item_indicator_margin">15dp</dimen>
+
+</resources>

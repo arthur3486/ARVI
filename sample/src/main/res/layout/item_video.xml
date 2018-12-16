@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/video_item_card_corner_radius"
+    app:cardElevation="@dimen/video_item_card_elevation"
+    app:cardUseCompatPadding="true">
+
+    <com.arthurivanets.sample.ui.widget.AdvancedFrameLayout
+        android:id="@+id/videoContentWrapperFl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/video_container_background_color"
+        app:scaling_type="width_based"
+        app:aspect_ratio="@integer/aspect_ratio_4_by_3">
+
+        <!-- Video Renderer View -->
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@id/player_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:resize_mode="zoom"
+            app:surface_type="texture_view"
+            app:use_controller="false"/>
+
+        <!-- Info Container -->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/video_title_background_drawable">
+
+            <TextView
+                android:id="@+id/titleTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:paddingTop="@dimen/video_item_title_padding_top"
+                android:paddingBottom="@dimen/video_item_title_padding_bottom"
+                android:paddingLeft="@dimen/video_item_title_padding_left"
+                android:paddingStart="@dimen/video_item_title_padding_left"
+                android:paddingRight="@dimen/video_item_title_padding_right"
+                android:paddingEnd="@dimen/video_item_title_padding_right"
+                android:textSize="@dimen/video_item_title_text_size"
+                android:textColor="@color/video_item_title_text_color"
+                android:drawablePadding="@dimen/video_item_title_drawable_padding"
+                android:drawableLeft="@drawable/ic_outline_music_video_24px"
+                android:drawableStart="@drawable/ic_outline_music_video_24px"/>
+
+            <!-- Progress Bar -->
+
+            <ProgressBar
+                style="@style/VideoItem.Indicator.ProgressBar"
+                android:id="@+id/progressBar"
+                android:layout_gravity="center_vertical|end"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+            <!-- Error Icon -->
+
+            <ImageView
+                style="@style/VideoItem.Indicator"
+                android:id="@+id/errorIconIv"
+                android:layout_gravity="center_vertical|end"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_error_outline_black_24dp"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+        </FrameLayout>
+
+    </com.arthurivanets.sample.ui.widget.AdvancedFrameLayout>
+
+</com.google.android.material.card.MaterialCardView>

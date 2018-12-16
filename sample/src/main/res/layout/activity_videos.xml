@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragmentHolder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- View Pager -->
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabLayout"
+        android:clipToPadding="false"/>
+
+    <!-- Top Bar & Tab Layout -->
+
+    <include
+        layout="@layout/view_top_bar_drop_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/horizontal_drop_shadow_size"
+        android:layout_below="@id/tabLayout"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_below="@id/top_bar"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        android:background="@color/colorPrimary"/>
+
+    <include
+        android:id="@id/top_bar"
+        layout="@layout/view_top_bar"/>
+
+</RelativeLayout>

@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="app_name">ARVI Demo</string>
+
+    <!-- Font Families -->
+    <string name="font_family_normal">sans-serif</string>
+    <string name="font_family_medium">sans-serif-medium</string>
+    <string name="font_family_thin">sans-serif-thin</string>
+
+    <!-- Titles -->
+    <string name="title_basic_demo">ARVI Demo (Basic)</string>
+    <string name="title_adapster_demo">ARVI Demo (Adapster)</string>
+    <string name="title_videos_fragment_playback_one_at_a_time">One at a time</string>
+    <string name="title_videos_fragment_playback_multiple_simultaneously">Multiple simultaneously</string>
+
+</resources>

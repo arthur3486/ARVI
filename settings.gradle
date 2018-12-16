@@ -1,1 +1,1 @@
-include ':app', ':arvi', ':arvi-adapster', ':arvi-utils', ':arvi-ktx'
+include ':sample', ':arvi', ':arvi-adapster', ':arvi-utils', ':arvi-ktx'
