@@ -103,7 +103,6 @@ The basic implementation would have to include the core module
 `implementation "com.arthurivanets.arvi:arvi:X.Y.Z"`
 
 So, add the library core module dependency to your module-level `build.gradle` file. 
-> ***Latest version:*** [ ![Download](https://api.bintray.com/packages/arthurimsacc/maven/arvi/images/download.svg) ](https://bintray.com/arthurimsacc/maven/arvi/_latestVersion)
 
 ````groovy
 ext {
@@ -113,7 +112,7 @@ ext {
 
 dependencies {
     //...
-    implementation "com.arthurivanets.arvi:arvi:$adapsterLibraryVersion"
+    implementation "com.arthurivanets.arvi:arvi:$arviLibraryVersion"
 }
 ````
 
@@ -121,6 +120,91 @@ And proceed with the further implementation.
 > ***See: [Basic Implementation](#basic-implementation) and [Adapster-based Implementation](#adapster-based-implementation)***
 
 ## Basic Implementation
+
+Basic implementations consists of a few straightforward steps, listed below:
+
+1. Ensure the proper release of the active Players when the application goes into background
+
+
+<details><summary><b>Kotlin (click to expand)</b></summary>
+<p>
+	
+****Basic****
+    
+````kotlin
+//...
+import com.arthurivanets.arvi.PlayerProviderImpl
+
+class ArviApplication : Application() {
+
+    //...
+
+    override fun onTrimMemory(level : Int) {
+        super.onTrimMemory(level)
+
+        if(level >= TRIM_MEMORY_BACKGROUND) {
+            PlayerProviderImpl.getInstance(this).release()
+        }
+    }
+
+    //...
+
+}
+````
+
+****With**** `arvi-ktx`
+
+````kotlin
+//...
+import com.arthurivanets.arvi.ktx.playerProvider
+
+class ArviApplication : Application() {
+
+    //...
+
+    override fun onTrimMemory(level : Int) {
+        super.onTrimMemory(level)
+
+        if(level >= TRIM_MEMORY_BACKGROUND) {
+            playerProvider.release()
+        }
+    }
+
+    //...
+
+}
+````
+
+</p></details><br>
+
+<details><summary><b>Java (click to expand)</b></summary>
+<p>
+    
+````java
+//...
+import com.arthurivanets.arvi.PlayerProviderImpl;
+
+public final class YourApplication extends Application {
+
+    //...
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+
+        if(level >= TRIM_MEMORY_BACKGROUND) {
+            PlayerProviderImpl.getInstance(this).release();
+        }
+    }
+    
+    //...
+
+}
+````
+
+</p></details><br>
+
+2. Implement your [`RecyclerView.ViewHolder`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.ViewHolder) based on the [`PlayableItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemViewHolder.java)
 
 //TODO
 
@@ -152,4 +236,4 @@ See the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 ## License
 
-Adapster is licensed under the [Apache 2.0 License](LICENSE).
+ARVI is licensed under the [Apache 2.0 License](LICENSE).
