@@ -15,7 +15,7 @@
 * [Getting Started](#getting-started)
 * [Basic Implementation](#basic-implementation)
 * [Adapster-based Implementation](#adapster-based-implementation)
-* [Advanced Use](#advanced-use)
+* [Advanced Use Cases](#advanced-use-cases)
 * [Contribution](#contribution)
 * [Hall of Fame](#hall-of-fame)
 * [License](#license)
@@ -123,7 +123,7 @@ And proceed with the further implementation.
 
 Basic implementations consists of a few straightforward steps, listed below:
 
-1. Ensure the proper release of the active Players when the application goes into background
+1. Ensure the proper release of the active players when the application goes into background
 
 
 <details><summary><b>Kotlin (click to expand)</b></summary>
@@ -206,7 +206,166 @@ public final class YourApplication extends Application {
 
 2. Implement your [`RecyclerView.ViewHolder`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.ViewHolder) based on the [`PlayableItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemViewHolder.java)
 
-//TODO
+****IMPORTANT****: Your `ViewHolder`'s `layout.xml` file must contain a [`PlayerView`](https://google.github.io/ExoPlayer/doc/reference/com/google/android/exoplayer2/ui/PlayerView.html) with an id `@id/player_view`. 
+> ***See: [BasicVideoItemViewHolder](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemViewHolder.kt) and [item_video.xml](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemViewHolder.kt)***
+
+<details><summary><b>Kotlin (click to expand)</b></summary>
+<p>
+    
+````kotlin
+class BasicVideoItemViewHolder(
+    parent : ViewGroup,
+    itemView : View
+) : PlayableItemViewHolder(parent, itemView) {
+
+    //...
+
+    override fun getUrl() : String {
+        return "video_url..."
+    }
+    
+    //...
+
+}
+````
+
+</p></details><br>
+
+<details><summary><b>Java (click to expand)</b></summary>
+<p>
+    
+````java
+public final class BasicVideoItemViewHolder extends PlayableItemViewHolder {
+
+    //...
+
+    @Override
+    public final String getUrl() {
+        return "video_url...";
+    }
+
+    //...
+
+}
+````
+
+</p></details><br>
+
+3. Use the [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java) instead of the regular [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView)
+
+****IMPORTANT****: [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java) should be bound to the lifecycle of the Activity/Fragment (Activity/Fragment lifecycle events should be propagated to the [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java)) in order to ensure the correct handling of the video playback.
+> ***See: [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java), [`BasicVideoItemsRecyclerViewAdapter`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemsRecyclerViewAdapter.kt), [`BasicVideosFragment`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/ui/basic/BasicVideosFragment.kt) and [`fragment_videos.xml`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/res/layout/fragment_videos.xml)***
+
+<details><summary><b>Kotlin (click to expand)</b></summary>
+<p>
+    
+````kotlin
+class BasicVideosFragment : BaseFragment() {
+
+    //...
+
+    override fun init(savedInstanceState : Bundle?) {
+        with(recyclerView) {
+	    // PlayableItemRecyclerView configuration
+            setPlaybackTriggeringStates(
+                PlayableItemsContainer.PlaybackTriggeringState.IDLING,
+                PlayableItemsContainer.PlaybackTriggeringState.DRAGGING
+            )
+
+            autoplayMode = PlayableItemsContainer.AutoplayMode.ONE_AT_A_TIME
+            adapter = BasicVideoItemsRecyclerViewAdapter(
+                context = context!!,
+                items = VideoProvider.getVideos(count = 100, mute = true).toMutableList(),
+                arviConfig = Config.Builder()
+                    .cache(ExoPlayerUtils.getCache(context!!))
+                    .build()
+            )
+        }
+    }
+    
+    //...
+
+    override fun onResume() {
+        super.onResume()
+
+        recyclerView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        recyclerView.onPause()
+    }
+
+    override fun onDestroy() {
+    	recyclerView?.onDestroy()
+	
+        super.onDestroy()
+    }
+    
+    //...
+
+}
+````
+
+</p></details><br>
+
+<details><summary><b>Java (click to expand)</b></summary>
+<p>
+    
+````java
+public final class BasicVideosFragment extends BaseFragment {
+
+    //...
+
+    @Override
+    public void init(Bundle savedInstanceState) {
+        mRecyclerView.setPlaybackTriggeringStates(
+            PlayableItemsContainer.PlaybackTriggeringState.IDLING,
+            PlayableItemsContainer.PlaybackTriggeringState.DRAGGING
+        );
+        mRecyclerView.setAutoplayMode(PlayableItemsContainer.AutoplayMode.ONE_AT_A_TIME);
+        mRecyclerView.setAdapter(new BasicVideoItemsRecyclerViewAdapter(
+            context,
+            VideoProvider.getVideos(100, true),
+            new Config.Builder()
+                .cache(ExoPlayerUtils.getCache(context))
+                .build()
+        ));
+    }
+    
+    //...
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mRecyclerView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mRecyclerView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mRecyclerView.onDestroy();
+    
+        super.onDestroy();
+    }
+    
+    //...
+
+}
+````
+
+</p></details><br>
+
+For more advanced use cases
+> ***See: [Advanced Use Cases](#advanced-use-cases)***
 
 ## Adapster-based Implementation
 
