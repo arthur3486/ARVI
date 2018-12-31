@@ -1,6 +1,6 @@
 # ARVI - Autoplayable RecyclerView Items
 
-> ***[ExoPlayer](https://github.com/google/ExoPlayer)-based Android library that makes the implementation of the autoplayable RecyclerView items an easy task***
+> ***[ExoPlayer](https://github.com/google/ExoPlayer)-based Android library that makes the implementation of the autoplayable RecyclerView video items an easy task***
 
 **ARVI** will enable you to make your feeds more interactive and appealing to your end users without the need to spend a lot of your valuable time on the implementation.
 
@@ -88,9 +88,7 @@ dependencies {
 
 ### ARVI Dependencies
 
-ARVI is comprised of several library modules which allows you to select only the ones that suit your needs the best.
-
-The library modules include:
+ARVI is comprised of several library modules, namely:
 
 * `arvi` - core functionality (Required)
 * `arvi-adapster` - [Adapster](https://github.com/arthur3486/adapster) adaptation (Optional)
@@ -102,7 +100,7 @@ The basic implementation would have to include the core module
 
 `implementation "com.arthurivanets.arvi:arvi:X.Y.Z"`
 
-So, add the library core module dependency to your module-level `build.gradle` file. 
+Which should be added to your module-level `build.gradle` file. 
 
 ````groovy
 ext {
@@ -116,7 +114,7 @@ dependencies {
 }
 ````
 
-And proceed with the further implementation.
+After that you can proceed with further implementation.
 > ***See: [Basic Implementation](#basic-implementation) and [Adapster-based Implementation](#adapster-based-implementation)***
 
 ## Basic Implementation
@@ -204,9 +202,9 @@ public final class YourApplication extends Application {
 
 </p></details><br>
 
-2. Implement your [`RecyclerView.ViewHolder`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.ViewHolder) based on the [`PlayableItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemViewHolder.java)
+2. Implement your Item's [`ViewHolder`] based on the [`PlayableItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemViewHolder.java)
 
-****IMPORTANT****: Your `ViewHolder`'s `layout.xml` file must contain a [`PlayerView`](https://google.github.io/ExoPlayer/doc/reference/com/google/android/exoplayer2/ui/PlayerView.html) with an id `@id/player_view`. 
+****IMPORTANT****: Your `ViewHolder`'s `layout.xml` file must contain a [`PlayerView`](https://google.github.io/ExoPlayer/doc/reference/com/google/android/exoplayer2/ui/PlayerView.html) child with an id `@id/player_view`. 
 > ***See: [BasicVideoItemViewHolder](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemViewHolder.kt) and [item_video.xml](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemViewHolder.kt)***
 
 <details><summary><b>Kotlin (click to expand)</b></summary>
@@ -253,7 +251,7 @@ public final class BasicVideoItemViewHolder extends PlayableItemViewHolder {
 
 3. Use the [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java) instead of the regular [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView)
 
-****IMPORTANT****: [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java) should be bound to the lifecycle of the Activity/Fragment (Activity/Fragment lifecycle events should be propagated to the [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java)) in order to ensure the correct handling of the video playback.
+****IMPORTANT****: [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java) should be bound to the lifecycle of the Activity/Fragment (Activity/Fragment lifecycle events should be propagated to the [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java)) in order to ensure the correct handling of the item video playback.
 > ***See: [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java), [`BasicVideoItemsRecyclerViewAdapter`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemsRecyclerViewAdapter.kt), [`BasicVideosFragment`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/ui/basic/BasicVideosFragment.kt) and [`fragment_videos.xml`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/res/layout/fragment_videos.xml)***
 
 <details><summary><b>Kotlin (click to expand)</b></summary>
@@ -368,6 +366,10 @@ For more advanced use cases
 > ***See: [Advanced Use Cases](#advanced-use-cases)***
 
 ## Adapster-based Implementation
+
+//TODO
+
+## Advanced Use Cases
 
 //TODO
 
