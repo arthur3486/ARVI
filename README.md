@@ -119,9 +119,11 @@ After that you can proceed with further implementation.
 
 ## Basic Implementation
 
-Basic implementations consists of a few straightforward steps, listed below:
+Basic implementation consists of 3 straightforward steps, which include the proper handling of the system memory claims, creation of the playable Item View Holder, and the incorporation of the Playable Items Container.
 
-1. Ensure the proper release of the active players when the application goes into background
+The steps you need to take:
+
+1. Ensure the proper release of the active players when the application goes into background (System Memory Claims)
 
 
 <details><summary><b>Kotlin (click to expand)</b></summary>
@@ -202,7 +204,7 @@ public final class YourApplication extends Application {
 
 </p></details><br>
 
-2. Implement your Item's [`ViewHolder`] based on the [`PlayableItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemViewHolder.java)
+2. Implement your Item's `ViewHolder` based on the [`PlayableItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemViewHolder.java)
 
 ****IMPORTANT****: Your `ViewHolder`'s `layout.xml` file must contain a [`PlayerView`](https://google.github.io/ExoPlayer/doc/reference/com/google/android/exoplayer2/ui/PlayerView.html) child with an id `@id/player_view`. 
 > ***See: [BasicVideoItemViewHolder](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemViewHolder.kt) and [item_video.xml](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemViewHolder.kt)***
@@ -249,7 +251,7 @@ public final class BasicVideoItemViewHolder extends PlayableItemViewHolder {
 
 </p></details><br>
 
-3. Use the [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java) instead of the regular [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView)
+3. Replace the regular [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView) with the [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java)
 
 ****IMPORTANT****: [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java) should be bound to the lifecycle of the Activity/Fragment (Activity/Fragment lifecycle events should be propagated to the [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java)) in order to ensure the correct handling of the item video playback.
 > ***See: [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java), [`BasicVideoItemsRecyclerViewAdapter`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemsRecyclerViewAdapter.kt), [`BasicVideosFragment`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/ui/basic/BasicVideosFragment.kt) and [`fragment_videos.xml`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/res/layout/fragment_videos.xml)***
