@@ -28,7 +28,7 @@
 
 ### Prerequisites
 
-1. Make sure that you've added the `jcenter()` repository to your top-level `build.gradle` file.
+**1. Make sure that you've added the `jcenter()` repository to your top-level `build.gradle` file.**
 
 ````groovy
 buildscript {
@@ -41,7 +41,7 @@ buildscript {
 }
 ````
 
-2. Enable the **jetifier** and **androidX** support in the top-level `gradle.properties` file.
+**2. Enable the **jetifier** and **androidX** support in the top-level `gradle.properties` file.**
 
 ````groovy
 //...
@@ -50,7 +50,7 @@ android.useAndroidX=true
 //....
 ````
 
-3. Update your `compileSdkVersion` in the module-level `build.gradle` file to **28+**.
+**3. Update your `compileSdkVersion` in the module-level `build.gradle` file to **28+**.**
 
 ````groovy
 //...
@@ -62,7 +62,7 @@ android {
 //...
 ````
 
-4. Replace your `com.android.support.appcompat.*` dependency with the new `androidx.appcompat.*` alternative.
+**4. Replace your `com.android.support.appcompat.*` dependency with the new `androidx.appcompat.*` alternative.**
 
 ````groovy
 //...
@@ -74,7 +74,7 @@ dependencies {
 //...
 ````
 
-5. Add the [ExoPlayer](https://github.com/google/ExoPlayer) dependency to the module-level `build.gradle` file.
+**5. Add the [ExoPlayer](https://github.com/google/ExoPlayer) dependency to the module-level `build.gradle` file.**
 
 ````groovy
 //...
@@ -123,7 +123,7 @@ Basic implementation consists of 3 straightforward steps, which include the prop
 
 The steps you need to take:
 
-1. Ensure the proper release of the active players when the application goes into background (System Memory Claims)
+**1. Ensure the proper release of the active players when the application goes into background (System Memory Claims)**
 
 
 <details><summary><b>Kotlin (click to expand)</b></summary>
@@ -204,7 +204,7 @@ public final class YourApplication extends Application {
 
 </p></details><br>
 
-2. Implement your Item's `ViewHolder` based on the [`PlayableItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemViewHolder.java)
+**2. Implement your Item's `ViewHolder` based on the [`PlayableItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemViewHolder.java)**
 
 ****IMPORTANT****: Your `ViewHolder`'s `layout.xml` file must contain a [`PlayerView`](https://google.github.io/ExoPlayer/doc/reference/com/google/android/exoplayer2/ui/PlayerView.html) child with an id `@id/player_view`. 
 > ***See: [BasicVideoItemViewHolder](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemViewHolder.kt) and [item_video.xml](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemViewHolder.kt)***
@@ -251,7 +251,7 @@ public final class BasicVideoItemViewHolder extends PlayableItemViewHolder {
 
 </p></details><br>
 
-3. Replace the regular [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView) with the [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java)
+**3. Replace the regular [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView) with the [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java)**
 
 ****IMPORTANT****: [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java) should be bound to the lifecycle of the Activity/Fragment (Activity/Fragment lifecycle events should be propagated to the [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java)) in order to ensure the correct handling of the item video playback.
 > ***See: [`PlayableItemsRecyclerView`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemsRecyclerView.java), [`BasicVideoItemsRecyclerViewAdapter`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemsRecyclerViewAdapter.kt), [`BasicVideosFragment`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/ui/basic/BasicVideosFragment.kt) and [`fragment_videos.xml`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/res/layout/fragment_videos.xml)***
@@ -369,7 +369,7 @@ For more advanced use cases
 
 ## Adapster-based Implementation
 
-[Adapster]()-based implementation requires both the official [Adapster]() and `arvi-adapster` module dependencies.
+[Adapster](https://github.com/arthur3486/adapster)-based implementation requires both the official [Adapster](https://github.com/arthur3486/adapster) and `arvi-adapster` module dependencies.
 
 > ***Latest ARVI version:*** [ ![Download](https://api.bintray.com/packages/arthurimsacc/maven/arvi/images/download.svg) ](https://bintray.com/arthurimsacc/maven/arvi/_latestVersion)
 
@@ -433,7 +433,134 @@ For more advanced use cases
 
 ## Advanced Use Cases
 
-//TODO
+Sometimes you require something more than a basic implementation, whether it's an ability to enable the caching of your videos or a way to authorize your HTTP Video requests, you name it; for that reason a list of the most common advanced use cases has been compiled.
+
+Most common advanced use cases include, but not limited to:
+
+**1. Video Caching**
+
+In order to enable the video caching you should provide an instance of the [`ExoPlayer Cache`](https://google.github.io/ExoPlayer/doc/reference/com/google/android/exoplayer2/upstream/cache/Cache.html) via the ARVI [`Config`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/Config.java) to your Item ViewHolders, and then use the provided [`Config`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/Config.java) within each corresponding Item `ViewHolder`.
+
+<details><summary><b>Kotlin (click to expand)</b></summary>
+<p>
+    
+````kotlin
+//...
+import com.arthurivanets.arvi.Config
+
+class BasicVideoItemViewHolder(
+    parent : ViewGroup,
+    itemView : View,
+    val arviConfig : Config
+) : PlayableItemViewHolder(parent, itemView) {
+
+    //...
+
+    override fun getUrl() : String {
+        return "video_url..."
+    }
+    
+    override fun getConfig() : Config {
+        return arviConfig
+    }
+    
+    //...
+
+}
+````
+
+****Adapster-based****
+````kotlin
+//...
+import com.arthurivanets.arvi.adapster.AdapsterPlayableItemViewHolder
+
+class VideoItemViewHolder(
+    parent : ViewGroup,
+    itemView : View,
+    private val resources : VideoItemResources?
+) : AdapsterPlayableItemViewHolder<Video>(parent, itemView) {
+
+    //...
+
+    override fun getUrl() : String {
+        return "video_url..."
+    }
+    
+    override fun getConfig() : Config {
+        return (resources?.arviConfig ?: super.getConfig())
+    }
+    
+    //...
+
+}
+````
+
+</p></details><br>
+
+<details><summary><b>Java (click to expand)</b></summary>
+<p>
+    
+````java
+//...
+import com.arthurivanets.arvi.Config;
+
+public final class BasicVideoItemViewHolder extends PlayableItemViewHolder {
+
+    //...
+
+    @Override
+    public final String getUrl() {
+        return "video_url...";
+    }
+    
+    @Override
+    public final Config getConfig() {
+        return arviConfig;
+    }
+    
+    //...
+
+}
+````
+
+****Adapster-based****
+````java
+//...
+import com.arthurivanets.arvi.adapster.AdapsterPlayableItemViewHolder;
+
+public final class VideoItemViewHolder extends AdapsterPlayableItemViewHolder<Video> {
+
+    //...
+
+    @Override
+    public final String getUrl() {
+        return "video_url...";
+    }
+    
+    @Override
+    public final Config getConfig() {
+        return resources.arviConfig;
+    }
+    
+    //...
+
+}
+````
+
+</p></details><br>
+
+The general [`ExoPlayer Cache`](https://google.github.io/ExoPlayer/doc/reference/com/google/android/exoplayer2/upstream/cache/Cache.html) instance can be easily created using the utility extension methods found in the [`ArviExtensions`](https://github.com/arthur3486/ARVI/blob/master/arvi-ktx/src/main/java/com/arthurivanets/arvi/ktx/ArviExtensions.kt) of the `arvi-ktx` module, or you can resort to your [`ExoPlayer Cache`](https://google.github.io/ExoPlayer/doc/reference/com/google/android/exoplayer2/upstream/cache/Cache.html) instance creation approach; choose the approach that fits your requirements the best.
+
+For more details
+> ***See: [`BasicVideosFragment`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/ui/basic/BasicVideosFragment.kt), [`BasicVideoItemsRecyclerViewAdapter`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemsRecyclerViewAdapter.kt), [`BasicVideoItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemViewHolder.kt), [`AdapsterVideosFragment`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/ui/adapster/AdapsterVideosFragment.kt), [`VideoItemsRecyclerViewAdapter`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/adapster/VideoItemsRecyclerViewAdapter.kt), [`VideoItem`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/adapster/VideoItem.kt), [`VideoItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/adapster/VideoItemViewHolder.kt), [`VideoItemResources`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/adapster/VideoItemResources.kt), [`Config`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/Config.java), [`ArviExtensions`](https://github.com/arthur3486/ARVI/blob/master/arvi-ktx/src/main/java/com/arthurivanets/arvi/ktx/ArviExtensions.kt), [`Cache`](https://github.com/arthur3486/ARVI/blob/master/arvi-ktx/src/main/java/com/arthurivanets/arvi/ktx/ArviExtensions.kt)***
+
+**2. HTTP Video Request Authorization**
+
+//TODO <---
+
+**3.**
+
+**4.**
 
 ## Contribution
 
