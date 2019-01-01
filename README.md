@@ -549,18 +549,61 @@ public final class VideoItemViewHolder extends AdapsterPlayableItemViewHolder<Vi
 
 </p></details><br>
 
-The general [`ExoPlayer Cache`](https://google.github.io/ExoPlayer/doc/reference/com/google/android/exoplayer2/upstream/cache/Cache.html) instance can be easily created using the utility extension methods found in the [`ArviExtensions`](https://github.com/arthur3486/ARVI/blob/master/arvi-ktx/src/main/java/com/arthurivanets/arvi/ktx/ArviExtensions.kt) of the `arvi-ktx` module, or you can resort to your [`ExoPlayer Cache`](https://google.github.io/ExoPlayer/doc/reference/com/google/android/exoplayer2/upstream/cache/Cache.html) instance creation approach; choose the approach that fits your requirements the best.
+The general [`ExoPlayer Cache`](https://google.github.io/ExoPlayer/doc/reference/com/google/android/exoplayer2/upstream/cache/Cache.html) instance can be easily created using the utility extension methods found in the [`ArviExtensions`](https://github.com/arthur3486/ARVI/blob/master/arvi-ktx/src/main/java/com/arthurivanets/arvi/ktx/ArviExtensions.kt) of the `arvi-ktx` module, or you can resort to your own [`ExoPlayer Cache`](https://google.github.io/ExoPlayer/doc/reference/com/google/android/exoplayer2/upstream/cache/Cache.html) instance creation approach; choose the approach that fits your requirements the best.
 
 For more details
 > ***See: [`BasicVideosFragment`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/ui/basic/BasicVideosFragment.kt), [`BasicVideoItemsRecyclerViewAdapter`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemsRecyclerViewAdapter.kt), [`BasicVideoItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/basic/BasicVideoItemViewHolder.kt), [`AdapsterVideosFragment`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/ui/adapster/AdapsterVideosFragment.kt), [`VideoItemsRecyclerViewAdapter`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/adapster/VideoItemsRecyclerViewAdapter.kt), [`VideoItem`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/adapster/VideoItem.kt), [`VideoItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/adapster/VideoItemViewHolder.kt), [`VideoItemResources`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/adapster/VideoItemResources.kt), [`Config`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/Config.java), [`ArviExtensions`](https://github.com/arthur3486/ARVI/blob/master/arvi-ktx/src/main/java/com/arthurivanets/arvi/ktx/ArviExtensions.kt), [`Cache`](https://github.com/arthur3486/ARVI/blob/master/arvi-ktx/src/main/java/com/arthurivanets/arvi/ktx/ArviExtensions.kt)***
 
 **2. HTTP Video Request Authorization**
 
+In cases when your video request requires authorization, you can use the [`RequestAuthorizer`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/datasource/RequestAuthorizer.java) to provide the necessary auth token whenever the player requests it. The created [`RequestAuthorizer`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/datasource/RequestAuthorizer.java) should be passed around in the ARVI [`Config`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/Config.java) object.
+
+<details><summary><b>Kotlin (click to expand)</b></summary>
+<p>
+    
+````kotlin
+//...
+import com.arthurivanets.arvi.player.datasource.RequestAuthorizer
+
+class ArviRequestAuthorizer(private val authTokenProvider : AuthTokenProvider) : RequestAuthorizer {
+
+    override fun getAuthorization() : String {
+        return "Bearer ${authTokenProvider.getAuthToken()}"
+    }
+
+}
+````
+
+</p></details><br>
+
+<details><summary><b>Java (click to expand)</b></summary>
+<p>
+    
+````java
+//...
+import com.arthurivanets.arvi.player.datasource.RequestAuthorizer;
+
+public final class ArviRequestAuthorizer extends RequestAuthorizer {
+
+    @Override
+    public final String getAuthorization() {
+        return ("Bearer " + authTokenProvider.getAuthToken());
+    }
+
+}
+````
+
+</p></details><br>
+
+> ***See: [`RequestAuthorizer`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/datasource/RequestAuthorizer.java), [`Config`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/Config.java)***
+
+**3. ViewHolder Playback control**
+
 //TODO <---
 
-**3.**
+**4. Custom Implementations**
 
-**4.**
+//TODO <---
 
 ## Contribution
 
