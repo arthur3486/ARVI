@@ -556,7 +556,9 @@ For more details
 
 **2. HTTP Video Request Authorization**
 
-In cases when your video request requires authorization, you can use the [`RequestAuthorizer`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/datasource/RequestAuthorizer.java) to provide the necessary auth token whenever the player requests it. The created [`RequestAuthorizer`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/datasource/RequestAuthorizer.java) should be passed around in the ARVI [`Config`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/Config.java) object.
+In cases when your video requests require authorization, you can use the [`RequestAuthorizer`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/datasource/RequestAuthorizer.java) to provide the necessary auth token whenever the player requests it. The created [`RequestAuthorizer`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/datasource/RequestAuthorizer.java) should be associated with the [`ArviHttpDataSourceFactory`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/datasource/ArviHttpDataSourceFactory.java) and passed around in the ARVI [`Config`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/Config.java) object.
+
+****RequestAuthorizer****
 
 <details><summary><b>Kotlin (click to expand)</b></summary>
 <p>
@@ -585,6 +587,8 @@ import com.arthurivanets.arvi.player.datasource.RequestAuthorizer;
 
 public final class ArviRequestAuthorizer extends RequestAuthorizer {
 
+    //...
+
     @Override
     public final String getAuthorization() {
         return ("Bearer " + authTokenProvider.getAuthToken());
@@ -595,15 +599,62 @@ public final class ArviRequestAuthorizer extends RequestAuthorizer {
 
 </p></details><br>
 
-> ***See: [`RequestAuthorizer`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/datasource/RequestAuthorizer.java), [`Config`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/Config.java)***
+****ARVI Config****
 
-**3. ViewHolder Playback control**
+<details><summary><b>Kotlin (click to expand)</b></summary>
+<p>
+    
+````kotlin
+//...
+val config = Config.Builder()
+    .dataSourceFactory(
+        ArviHttpDataSourceFactory(context.playerProvider.libraryName).apply {
+            setConnectTimeout(REQUEST_CONNECT_TIMEOUT_IN_MILLIS)
+            setReadTimeout(REQUEST_READ_TIMEOUT_IN_MILLIS)
+            
+            // Your request authorizer
+            setRequestAuthorizer(ArviRequestAuthorizer(...))
+        }
+    )
+    .build()
+````
 
-//TODO <---
+</p></details><br>
 
-**4. Custom Implementations**
+<details><summary><b>Java (click to expand)</b></summary>
+<p>
+    
+````java
+//...
+final ArviHttpDataSourceFactory dataSourceFactory = new ArviHttpDataSourceFactory(PlayerProviderImpl.getInstance(context).getLibraryName());
+dataSourceFactory.setConnectTimeout(REQUEST_CONNECT_TIMEOUT_IN_MILLIS);
+dataSourceFactory.setReadTimeout(REQUEST_READ_TIMEOUT_IN_MILLIS);
 
-//TODO <---
+// Your request authorizer
+dataSourceFactory.setRequestAuthorizer(new ArviRequestAuthorizer(...));
+
+// the final Config
+final Config config = new Config.Builder()
+    .dataSourceFactory(dataSourceFactory)
+    .build();
+````
+
+</p></details><br>
+
+> ***See: [`RequestAuthorizer`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/datasource/RequestAuthorizer.java), [`ArviHttpDataSourceFactory`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/datasource/ArviHttpDataSourceFactory.java), [`Config`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/Config.java)***
+
+**3. ViewHolder Playback Control**
+
+All [`Playable`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/Playable.java) Item `ViewHolder`s are capable of controlling almost every aspect of the corresponding playback, thus giving you more power in terms of the actual implementation.
+
+For more details on what possibilities the [`Playable`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/Playable.java) gives you
+> ***See: [`Playable`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/Playable.java)***
+
+**4. ARVI Players**
+
+All the [`Player`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/Player.java)s created using the [`PlayerProviderImpl`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/PlayerProviderImpl.java) can be used as stand alone players, as they are totally independent entities, the only thing to remember here is that you should properly handle the player binding/unbinding events to avoid the potential memory leaks and other related issues.
+
+> ***See: [`Player`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/player/Player.java), [`PlayerProvider`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/PlayerProvider.java), [`PlayerProviderImpl`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/PlayerProviderImpl.java)***
 
 ## Contribution
 
