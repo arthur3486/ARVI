@@ -8,6 +8,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Platform](https://img.shields.io/badge/platform-Android-green.svg)](http://developer.android.com/index.html)
 ![](https://img.shields.io/badge/API-21%2B-green.svg?style=flat)
+![](https://travis-ci.org/arthur3486/ARVI.svg?branch=master)
 
 ## Contents
 
