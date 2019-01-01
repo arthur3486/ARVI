@@ -369,6 +369,8 @@ For more advanced use cases
 
 ## Adapster-based Implementation
 
+[Adapster]()-based implementation requires the `arvi-adapster` module dependency.
+
 //TODO
 
 ## Advanced Use Cases
