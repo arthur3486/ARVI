@@ -369,9 +369,67 @@ For more advanced use cases
 
 ## Adapster-based Implementation
 
-[Adapster]()-based implementation requires the `arvi-adapster` module dependency.
+[Adapster]()-based implementation requires both the official [Adapster]() and `arvi-adapster` module dependencies.
 
-//TODO
+> ***Latest ARVI version:*** [ ![Download](https://api.bintray.com/packages/arthurimsacc/maven/arvi/images/download.svg) ](https://bintray.com/arthurimsacc/maven/arvi/_latestVersion)
+
+`implementation "com.arthurivanets.arvi:arvi-adapster:X.Y.Z"`
+
+While the implementation itself shares most of the steps with the [Basic Implementation](#basic-implementation), one of the things that should be taken into account is the fact that the implementation of your Item `ViewHolder` should be based on the [`AdapsterPlayableItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/arvi-adapster/src/main/java/com/arthurivanets/arvi/adapster/AdapsterPlayableItemViewHolder.java) instead of the [`PlayableItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/arvi/src/main/java/com/arthurivanets/arvi/widget/PlayableItemViewHolder.java).
+
+<details><summary><b>Kotlin (click to expand)</b></summary>
+<p>
+    
+````kotlin
+//...
+import com.arthurivanets.arvi.adapster.AdapsterPlayableItemViewHolder
+
+class VideoItemViewHolder(
+    parent : ViewGroup,
+    itemView : View,
+    private val resources : VideoItemResources?
+) : AdapsterPlayableItemViewHolder<Video>(parent, itemView) {
+
+    //...
+
+    override fun getUrl() : String {
+        return "video_url..."
+    }
+    
+    //...
+
+}
+````
+
+</p></details><br>
+
+<details><summary><b>Java (click to expand)</b></summary>
+<p>
+    
+````java
+//...
+import com.arthurivanets.arvi.adapster.AdapsterPlayableItemViewHolder;
+
+public final class VideoItemViewHolder extends AdapsterPlayableItemViewHolder<Video> {
+
+    //...
+    
+    @Override
+    public final String getUrl() {
+        return "video_url...";
+    }
+    
+    //...
+
+}
+````
+
+</p></details><br>
+
+> ***See: [`VideoItemsRecyclerViewAdapter`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/adapster/VideoItemsRecyclerViewAdapter.kt), [`AdapsterVideosFragment`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/ui/adapster/AdapsterVideosFragment.kt), [`AdapsterPlayableItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/arvi-adapster/src/main/java/com/arthurivanets/arvi/adapster/AdapsterPlayableItemViewHolder.java) and [`VideoItemViewHolder`](https://github.com/arthur3486/ARVI/blob/master/sample/src/main/java/com/arthurivanets/sample/adapters/adapster/VideoItemViewHolder.kt)***
+
+For more advanced use cases
+> ***See: [Advanced Use Cases](#advanced-use-cases)***
 
 ## Advanced Use Cases
 
