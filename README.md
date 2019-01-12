@@ -9,6 +9,7 @@
 [![Platform](https://img.shields.io/badge/platform-Android-green.svg)](http://developer.android.com/index.html)
 ![](https://img.shields.io/badge/API-21%2B-green.svg?style=flat)
 ![](https://travis-ci.org/arthur3486/ARVI.svg?branch=master)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ARVI-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7455)
 
 ## Contents
 
