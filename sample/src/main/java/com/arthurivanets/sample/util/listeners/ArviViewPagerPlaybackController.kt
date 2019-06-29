@@ -34,9 +34,4 @@ open class ArviViewPagerPlaybackController(private var viewPager : ViewPager?) :
     }
 
 
-    fun recycle() {
-        viewPager = null
-    }
-
-
 }

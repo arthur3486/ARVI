@@ -335,7 +335,7 @@ public class DefaultPlayer implements Player {
 
     @Override
     public final int getPlaybackState() {
-        return (isInitialized() ? this.exoPlayer.getPlaybackState() : STATE_IDLE);
+        return (isInitialized() ? this.exoPlayer.getPlaybackState() : PlaybackState.IDLE);
     }
 
 
@@ -344,6 +344,14 @@ public class DefaultPlayer implements Player {
     @Override
     public final long getPlaybackPosition() {
         return (isInitialized() ? this.exoPlayer.getCurrentPosition() : 0L);
+    }
+
+
+
+
+    @Override
+    public final long getDuration() {
+        return (isInitialized() ? this.exoPlayer.getDuration() : 0L);
     }
 
 
@@ -380,8 +388,8 @@ public class DefaultPlayer implements Player {
         return (
             isInitialized()
             && this.exoPlayer.getPlayWhenReady()
-            && (playbackState != STATE_IDLE)
-            && ((playbackState != STATE_ENDED) || isLooping())
+            && (playbackState != PlaybackState.IDLE)
+            && ((playbackState != PlaybackState.ENDED) || isLooping())
         );
     }
 

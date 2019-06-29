@@ -91,7 +91,7 @@ public abstract class AdapsterPlayableItemViewHolder<Data> extends BaseItem.View
         }
 
         if(startPlayer()) {
-            onStateChanged((getPlaybackState() == Player.STATE_READY) ? PlaybackState.READY : PlaybackState.STARTED);
+            onStateChanged((getPlaybackState() == Player.PlaybackState.READY) ? PlaybackState.READY : PlaybackState.STARTED);
         }
     }
 
@@ -278,6 +278,24 @@ public abstract class AdapsterPlayableItemViewHolder<Data> extends BaseItem.View
 
 
     @Override
+    public final long getPlaybackPosition() {
+        final Player player = getPlayer();
+        return ((player != null) ? player.getPlaybackPosition() : 0);
+    }
+
+
+
+
+    @Override
+    public long getDuration() {
+        final Player player = getPlayer();
+        return ((player != null) ? player.getDuration() : 0);
+    }
+
+
+
+
+    @Override
     public final View getPlayerView() {
         return mPlayerView;
     }
@@ -349,7 +367,7 @@ public abstract class AdapsterPlayableItemViewHolder<Data> extends BaseItem.View
 
     private int getPlaybackState() {
         final Player player = getPlayer();
-        return ((player != null) ? player.getPlaybackState() : Player.STATE_IDLE);
+        return ((player != null) ? player.getPlaybackState() : Player.PlaybackState.IDLE);
     }
 
 
@@ -516,7 +534,7 @@ public abstract class AdapsterPlayableItemViewHolder<Data> extends BaseItem.View
 
     private boolean isEnded() {
         final Player player = getPlayer();
-        return ((player != null) && (player.getPlaybackState() == Player.STATE_ENDED));
+        return ((player != null) && (player.getPlaybackState() == Player.PlaybackState.ENDED));
     }
 
 
@@ -601,19 +619,19 @@ public abstract class AdapsterPlayableItemViewHolder<Data> extends BaseItem.View
     public final void onPlayerStateChanged(int playbackState) {
         switch(playbackState) {
 
-            case Player.STATE_IDLE:
+            case Player.PlaybackState.IDLE:
                 onPlaybackIdle();
                 break;
 
-            case Player.STATE_BUFFERING:
+            case Player.PlaybackState.BUFFERING:
                 onPlaybackBuffering();
                 break;
 
-            case Player.STATE_READY:
+            case Player.PlaybackState.READY:
                 onPlaybackReady();
                 break;
 
-            case Player.STATE_ENDED:
+            case Player.PlaybackState.ENDED:
                 onPlaybackEnded();
                 break;
 

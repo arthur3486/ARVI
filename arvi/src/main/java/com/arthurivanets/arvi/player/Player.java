@@ -37,20 +37,21 @@ import androidx.annotation.Nullable;
 public interface Player {
 
 
-    int STATE_IDLE = com.google.android.exoplayer2.Player.STATE_IDLE;
-    int STATE_BUFFERING = com.google.android.exoplayer2.Player.STATE_BUFFERING;
-    int STATE_READY = com.google.android.exoplayer2.Player.STATE_READY;
-    int STATE_ENDED = com.google.android.exoplayer2.Player.STATE_ENDED;
-
-
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
-        STATE_IDLE,
-        STATE_BUFFERING,
-        STATE_READY,
-        STATE_ENDED
+        PlaybackState.IDLE,
+        PlaybackState.BUFFERING,
+        PlaybackState.READY,
+        PlaybackState.ENDED
     })
-    @interface PlaybackState {}
+    @interface PlaybackState {
+
+        int IDLE = com.google.android.exoplayer2.Player.STATE_IDLE;
+        int BUFFERING = com.google.android.exoplayer2.Player.STATE_BUFFERING;
+        int READY = com.google.android.exoplayer2.Player.STATE_READY;
+        int ENDED = com.google.android.exoplayer2.Player.STATE_ENDED;
+
+    }
 
 
     /**
@@ -185,6 +186,13 @@ public interface Player {
      * @return the current player playback position (in millis)
      */
     long getPlaybackPosition();
+
+    /**
+     * Retrieves the duration of the media played by the {@link Player} (in millis).
+     *
+     * @return the duration of the media (in millis)
+     */
+    long getDuration();
 
     /**
      * Retrieves the current data buffered percentage (a value between 0.0 and 1.0).

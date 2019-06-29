@@ -39,7 +39,6 @@ class VideosActivity : BaseActivity() {
     private var type = Type.BASIC
 
     private lateinit var adapter : VideosViewPagerAdapter
-    private lateinit var viewPagerPlaybackController : ArviViewPagerPlaybackController
 
 
     companion object {
@@ -89,7 +88,7 @@ class VideosActivity : BaseActivity() {
 
     private fun initViewPager() {
         with(viewPager) {
-            addOnPageChangeListener(ArviViewPagerPlaybackController(viewPager).also { viewPagerPlaybackController = it })
+            addOnPageChangeListener(ArviViewPagerPlaybackController(viewPager))
 
             adapter = initAdapter()
             offscreenPageLimit = (adapter?.count ?: 0)
@@ -134,13 +133,6 @@ class VideosActivity : BaseActivity() {
             getTabAt(0)?.text = getString(R.string.title_videos_fragment_playback_one_at_a_time)
             getTabAt(1)?.text = getString(R.string.title_videos_fragment_playback_multiple_simultaneously)
         }
-    }
-
-
-    override fun onRecycle() {
-        super.onRecycle()
-
-        viewPagerPlaybackController.recycle()
     }
 
 

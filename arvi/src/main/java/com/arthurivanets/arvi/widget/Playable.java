@@ -63,6 +63,20 @@ public interface Playable extends PlayabilityStateChangeObserver {
     void seekTo(long positionInMillis);
 
     /**
+     * Retrieves the current playback position of the Player (in milliseconds).
+     *
+     * @return the current playback position
+     */
+    long getPlaybackPosition();
+
+    /**
+     * Retrieves the duration of the media track (in milliseconds).
+     *
+     * @return the duration of the media track
+     */
+    long getDuration();
+
+    /**
      * Retrieves the player view associated with this item.
      *
      * @return the player view

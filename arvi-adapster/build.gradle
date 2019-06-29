@@ -1,4 +1,6 @@
-apply plugin: 'com.android.library'
+apply plugin: "com.android.library"
+
+apply from: "../common/constants.gradle"
 
 android {
     compileSdkVersion rootProject.compileSdk
@@ -36,6 +38,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation "androidx.appcompat:appcompat:${rootProject.supportLibraryVersion}"
+    implementation "androidx.recyclerview:recyclerview:${rootProject.recyclerViewVersion}"
 
     // Exo player related
     implementation "com.google.android.exoplayer:exoplayer:${rootProject.exoPlayerVersion}"
@@ -56,5 +59,4 @@ ext {
 
 project.archivesBaseName = "arvi-adapster"
 
-apply from: "../common/constants.gradle"
-apply from: '../gradle/script/publish.gradle'
+apply from: "../gradle/script/publish.gradle"
