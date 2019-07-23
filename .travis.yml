@@ -15,6 +15,7 @@ env:
   global:
     - ANDROID_API=29
     - EMULATOR_API=27
+    - ANDROID_HOME=/usr/local
     - ANDROID_BUILD_TOOLS=29.0.0
     - ADB_INSTALL_TIMEOUT=10 # minutes
 
