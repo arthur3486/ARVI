@@ -26,9 +26,9 @@ import com.arthurivanets.adapster.recyclerview.TrackableRecyclerViewAdapter
  */
 class VideoItemsRecyclerViewAdapter(
     context : Context,
-    items : MutableList<VideoItem>,
+    items : MutableList<BaseItem<*, *, *>>,
     private val resources : VideoItemResources
-) : TrackableRecyclerViewAdapter<Long, VideoItem, BaseItem.ViewHolder<*>>(context, items) {
+) : TrackableRecyclerViewAdapter<Long, BaseItem<*, *, *>, BaseItem.ViewHolder<*>>(context, items) {
 
 
     override fun getResources() : ItemResources? {

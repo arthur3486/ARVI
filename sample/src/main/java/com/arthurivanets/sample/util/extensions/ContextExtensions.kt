@@ -27,15 +27,15 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.use
 
 
 @SuppressLint("Recycle")
 fun Context.extractStyledAttributes(attributes : AttributeSet,
                                     attrs : IntArray,
                                     block : TypedArray.() -> Unit) {
-    obtainStyledAttributes(attributes, attrs, 0, 0)?.let {
+    obtainStyledAttributes(attributes, attrs, 0, 0).use {
         block(it)
-        it.recycle()
     }
 }
 
