@@ -21,7 +21,6 @@ import android.net.Uri;
 import android.util.Pair;
 
 import com.arthurivanets.arvi.player.Player;
-import com.arthurivanets.arvi.player.creators.DefaultPlayerCreator;
 import com.arthurivanets.arvi.player.creators.PlayerCreator;
 import com.arthurivanets.arvi.util.misc.Preconditions;
 import com.google.android.exoplayer2.source.LoopingMediaSource;
@@ -45,8 +44,6 @@ import static com.google.android.exoplayer2.util.Util.getUserAgent;
  */
 public final class PlayerProviderImpl implements PlayerProvider {
 
-
-    private static final int MAX_POOL_SIZE = Runtime.getRuntime().availableProcessors();
 
     public static final Config DEFAULT_CONFIG = new Config.Builder().build();
 
@@ -81,6 +78,8 @@ public final class PlayerProviderImpl implements PlayerProvider {
 
 
     private PlayerProviderImpl(Context context) {
+        ArviPlugins.lockDown();
+
         mLibraryName = getUserAgent(context, LIBRARY_NAME);
         mContext = context.getApplicationContext();
         mConfigCreatorMap = new HashMap<>();
@@ -255,7 +254,7 @@ public final class PlayerProviderImpl implements PlayerProvider {
         PlayerCreator creator = mConfigCreatorMap.get(config);
 
         if(creator == null) {
-            creator = new DefaultPlayerCreator(this, config);
+            creator = ArviPlugins.getPlayerCreatorFactory().create(this, config);
 
             mConfigCreatorMap.put(config, creator);
         }
@@ -270,7 +269,7 @@ public final class PlayerProviderImpl implements PlayerProvider {
         PlayerNodePool nodePool = mCreatorNodePoolMap.get(creator);
 
         if(nodePool == null) {
-            nodePool = new PlayerNodePoolImpl(MAX_POOL_SIZE);
+            nodePool = ArviPlugins.getPlayerNodePoolFactory().create();
 
             mCreatorNodePoolMap.put(creator, nodePool);
         }

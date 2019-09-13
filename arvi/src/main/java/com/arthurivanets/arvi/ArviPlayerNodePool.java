@@ -31,10 +31,10 @@ import androidx.annotation.Nullable;
 import static com.arthurivanets.arvi.util.misc.CollectionUtils.toHashSet;
 
 /**
- * An concrete implementation of the {@link PlayerNodePool}, used to
+ * A concrete implementation of the {@link PlayerNodePool}, used to
  * manage the {@link PlayerNode}s and corresponding {@link Player}s.
  */
-final class PlayerNodePoolImpl implements PlayerNodePool {
+final class ArviPlayerNodePool implements PlayerNodePool {
 
 
     private final int maxSize;
@@ -45,7 +45,7 @@ final class PlayerNodePoolImpl implements PlayerNodePool {
 
 
 
-    PlayerNodePoolImpl(int maxSize) {
+    ArviPlayerNodePool(int maxSize) {
         Preconditions.isTrue("You must specify a valid Pool Max Size.", (maxSize >= 0));
 
         this.maxSize = maxSize;
