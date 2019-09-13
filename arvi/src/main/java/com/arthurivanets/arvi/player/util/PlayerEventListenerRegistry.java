@@ -16,9 +16,6 @@
 
 package com.arthurivanets.arvi.player.util;
 
-import android.os.Handler;
-import android.os.Looper;
-
 import com.arthurivanets.arvi.player.Player;
 import com.arthurivanets.arvi.util.misc.Preconditions;
 import com.google.android.exoplayer2.ExoPlaybackException;
