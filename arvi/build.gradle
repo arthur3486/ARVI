@@ -6,8 +6,6 @@ android {
     defaultConfig {
         minSdkVersion rootProject.minSdk
         targetSdkVersion rootProject.targetSdk
-        versionCode rootProject.releaseVersionCode
-        versionName rootProject.releaseVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -48,11 +46,10 @@ dependencies {
 }
 
 ext {
-    releaseArtifact = "arvi"
-    releaseDescription = ""
+    PUBLISH_GROUP_ID = "com.arthurivanets.arvi"
+    PUBLISH_ARTIFACT_ID = "arvi"
+    PUBLISH_VERSION = "1.3.0"
+    PUBLISH_ARTIFACT_DESCRIPTION = libraryDescription
 }
 
-project.archivesBaseName = "arvi"
-
-apply from: "../common/constants.gradle"
 apply from: '../gradle/script/publish.gradle'

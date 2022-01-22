@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Arthur Ivanets, arthur.ivanets.l@gmail.com
+ * Copyright 2017 Arthur Ivanets, arthur.ivanets.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,9 @@ import com.arthurivanets.arvi.player.util.PlayerEventListenerRegistry;
 import com.arthurivanets.arvi.player.util.VolumeController;
 import com.arthurivanets.arvi.util.misc.ExoPlayerUtils;
 import com.arthurivanets.arvi.util.misc.Preconditions;
-import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.RenderersFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.drm.DrmSessionManager;
-import com.google.android.exoplayer2.drm.FrameworkMediaCrypto;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
@@ -54,7 +51,6 @@ public class DefaultPlayer implements Player {
     private TrackSelector trackSelector;
     private LoadControl loadControl;
     private BandwidthMeter bandwidthMeter;
-    private DrmSessionManager<FrameworkMediaCrypto> drmSessionManager;
     private MediaSource mediaSource;
 
     private SimpleExoPlayer exoPlayer;
@@ -86,32 +82,12 @@ public class DefaultPlayer implements Player {
                          @NonNull TrackSelector trackSelector,
                          @NonNull LoadControl loadControl,
                          @Nullable BandwidthMeter bandwidthMeter) {
-        this(
-            context,
-            renderersFactory,
-            trackSelector,
-            loadControl,
-            bandwidthMeter,
-            null
-        );
-    }
-
-
-
-
-    public DefaultPlayer(@NonNull Context context,
-                         @NonNull RenderersFactory renderersFactory,
-                         @NonNull TrackSelector trackSelector,
-                         @NonNull LoadControl loadControl,
-                         @Nullable BandwidthMeter bandwidthMeter,
-                         @Nullable DrmSessionManager<FrameworkMediaCrypto> drmSessionManager) {
         this.context = checkNonNull(context).getApplicationContext();
         this.eventHandler = new PlayerEventListenerRegistry();
         this.renderersFactory = checkNonNull(renderersFactory);
         this.trackSelector = checkNonNull(trackSelector);
         this.loadControl = checkNonNull(loadControl);
         this.bandwidthMeter = bandwidthMeter;
-        this.drmSessionManager = drmSessionManager;
     }
 
 
@@ -123,15 +99,12 @@ public class DefaultPlayer implements Player {
             return;
         }
 
-        // initializing the actual ExoPlayer
-        this.exoPlayer = ExoPlayerFactory.newSimpleInstance(
-            this.context,
-            this.renderersFactory,
-            this.trackSelector,
-            this.loadControl,
-            this.drmSessionManager,
-            this.bandwidthMeter
-        );
+        this.exoPlayer = new SimpleExoPlayer.Builder(this.context, this.renderersFactory)
+            .setTrackSelector(this.trackSelector)
+            .setLoadControl(this.loadControl)
+            .setBandwidthMeter(this.bandwidthMeter)
+            .build();
+
         this.exoPlayer.addListener(this.eventHandler);
         this.volumeController = new DefaultVolumeController(this.exoPlayer);
     }
@@ -144,11 +117,8 @@ public class DefaultPlayer implements Player {
         checkPlayerState();
         checkMediaSource();
 
-        this.exoPlayer.prepare(
-            this.mediaSource,
-            resetPosition,
-            false
-        );
+        this.exoPlayer.setMediaSource(this.mediaSource, resetPosition);
+        this.exoPlayer.prepare();
     }
 
 

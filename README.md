@@ -4,7 +4,7 @@
 
 **ARVI** will enable you to make your feeds more interactive and appealing to your end users without the need to spend a lot of your valuable time on the implementation.
 
-[ ![Download](https://api.bintray.com/packages/arthurimsacc/maven/arvi/images/download.svg) ](https://bintray.com/arthurimsacc/maven/arvi/_latestVersion)
+[ ![Download](https://img.shields.io/maven-central/v/com.arthurivanets.arvi/arvi.svg?label=Download) ](https://mvnrepository.com/search?q=com.arthurivanets.arvi)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Platform](https://img.shields.io/badge/platform-Android-green.svg)](http://developer.android.com/index.html)
 ![](https://img.shields.io/badge/API-21%2B-green.svg?style=flat)
@@ -98,7 +98,7 @@ ARVI is comprised of several library modules, namely:
 * `arvi-utils` - common utils and helpers (Optional)
 
 The basic implementation would have to include the core module 
-> ***Latest version:*** [ ![Download](https://api.bintray.com/packages/arthurimsacc/maven/arvi/images/download.svg) ](https://bintray.com/arthurimsacc/maven/arvi/_latestVersion)
+> ***Latest version:*** [ ![Download](https://img.shields.io/maven-central/v/com.arthurivanets.arvi/arvi.svg?label=Download) ](https://mvnrepository.com/search?q=com.arthurivanets.arvi)
 
 `implementation "com.arthurivanets.arvi:arvi:X.Y.Z"`
 
@@ -373,7 +373,7 @@ For more advanced use cases
 
 [Adapster](https://github.com/arthur3486/adapster)-based implementation requires both the official [Adapster](https://github.com/arthur3486/adapster) and `arvi-adapster` module dependencies.
 
-> ***Latest ARVI version:*** [ ![Download](https://api.bintray.com/packages/arthurimsacc/maven/arvi/images/download.svg) ](https://bintray.com/arthurimsacc/maven/arvi/_latestVersion)
+> ***Latest ARVI version:*** [ ![Download](https://img.shields.io/maven-central/v/com.arthurivanets.arvi/arvi.svg?label=Download) ](https://mvnrepository.com/search?q=com.arthurivanets.arvi)
 
 `implementation "com.arthurivanets.arvi:arvi-adapster:X.Y.Z"`
 
@@ -678,7 +678,7 @@ See the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 </table>
 
 
-> Using ARVI in your app and want it to get listed here? Email me at arthur.ivanets.l@gmail.com!
+> Using ARVI in your app and want it to get listed here? Email me at arthur.ivanets.work@gmail.com!
 
 ## License
 

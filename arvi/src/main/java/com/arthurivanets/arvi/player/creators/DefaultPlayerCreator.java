@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Arthur Ivanets, arthur.ivanets.l@gmail.com
+ * Copyright 2017 Arthur Ivanets, arthur.ivanets.work@gmail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,12 +24,10 @@ import com.arthurivanets.arvi.PlayerProvider;
 import com.arthurivanets.arvi.player.DefaultPlayer;
 import com.arthurivanets.arvi.player.Player;
 import com.arthurivanets.arvi.player.util.MediaSourceBuilder;
-import com.arthurivanets.arvi.player.util.MultiDrmRendererFactory;
-import com.arthurivanets.arvi.util.misc.CollectionUtils;
 import com.arthurivanets.arvi.util.misc.Preconditions;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.RenderersFactory;
-import com.google.android.exoplayer2.drm.DrmSessionManager;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
@@ -38,8 +36,6 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory;
-
-import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 
@@ -62,7 +58,6 @@ public final class DefaultPlayerCreator implements PlayerCreator {
     private final RenderersFactory renderersFactory;
     private final DataSource.Factory mediaDataSourceFactory;
     private final DataSource.Factory manifestDataSourceFactory;
-    private final DrmSessionManager[] drmSessionManagers;
 
 
 
@@ -72,18 +67,13 @@ public final class DefaultPlayerCreator implements PlayerCreator {
         Preconditions.nonNull(config);
 
         this.playerProvider = checkNonNull(playerProvider);
-        this.trackSelector = new DefaultTrackSelector();
+        this.trackSelector = new DefaultTrackSelector(playerProvider.getContext());
         this.loadControl = config.loadControl;
         this.bandwidthMeter = config.meter;
         this.mediaSourceBuilder = config.mediaSourceBuilder;
-        this.renderersFactory = new MultiDrmRendererFactory(
-            playerProvider.getContext(),
-            config.drmSessionManagers,
-            config.extensionMode
-        );
+        this.renderersFactory = new DefaultRenderersFactory(playerProvider.getContext());
         this.mediaDataSourceFactory = createDataSourceFactory(playerProvider, config);
         this.manifestDataSourceFactory = new DefaultDataSourceFactory(playerProvider.getContext(), playerProvider.getLibraryName());
-        this.drmSessionManagers = config.drmSessionManagers;
     }
 
 
@@ -121,8 +111,7 @@ public final class DefaultPlayerCreator implements PlayerCreator {
             this.renderersFactory,
             this.trackSelector,
             this.loadControl,
-            this.bandwidthMeter,
-            CollectionUtils.takeFirstOrNull(this.drmSessionManagers)
+            this.bandwidthMeter
         );
     }
 
@@ -169,7 +158,6 @@ public final class DefaultPlayerCreator implements PlayerCreator {
         result = ((prime * result) + this.renderersFactory.hashCode());
         result = ((prime * result) + this.mediaDataSourceFactory.hashCode());
         result = ((prime * result) + this.manifestDataSourceFactory.hashCode());
-        result = ((prime * result) + Arrays.hashCode(this.drmSessionManagers));
 
         return result;
     }

@@ -8,8 +8,6 @@ android {
     defaultConfig {
         minSdkVersion rootProject.minSdk
         targetSdkVersion rootProject.targetSdk
-        versionCode rootProject.releaseVersionCode
-        versionName rootProject.releaseVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -53,10 +51,10 @@ dependencies {
 }
 
 ext {
-    releaseArtifact = "arvi-adapster"
-    releaseDescription = ""
+    PUBLISH_GROUP_ID = "com.arthurivanets.arvi"
+    PUBLISH_ARTIFACT_ID = "arvi-adapster"
+    PUBLISH_VERSION = "1.3.0"
+    PUBLISH_ARTIFACT_DESCRIPTION = libraryDescription
 }
-
-project.archivesBaseName = "arvi-adapster"
 
 apply from: "../gradle/script/publish.gradle"
