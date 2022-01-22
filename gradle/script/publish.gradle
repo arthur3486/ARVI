@@ -1,169 +1,90 @@
-import java.util.zip.ZipFile
-
 apply plugin: "maven-publish"
-apply plugin: "com.github.dcendents.android-maven"
-apply plugin: "com.jfrog.bintray"
+apply plugin: "signing"
+apply from: "${rootDir}/common/constants.gradle"
 
-
-group = releaseGroupId
-version = releaseVersion
+group = PUBLISH_GROUP_ID
+version = PUBLISH_VERSION
 
 task androidSourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
+    archiveClassifier.set("sources")
 
-publishing {
-    publications {
-        aar(MavenPublication) {
-            groupId = releaseGroupId
-            artifactId = releaseArtifact
-            version = releaseVersion
-
-            // Tell maven to prepare the generated "*.aar" file for publishing
-            artifact(androidSourcesJar)
-            artifact("$buildDir/outputs/aar/${project.archivesBaseName}-release.aar")
-        }
+    if (project.plugins.findPlugin("com.android.library")) {
+        from android.sourceSets.main.java.srcDirs
+        from android.sourceSets.main.kotlin.srcDirs
+    } else {
+        from sourceSets.main.java.srcDirs
+        from sourceSets.main.kotlin.srcDirs
     }
-}
-
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            packaging "aar"
-            groupId releaseGroupId
-            artifactId releaseArtifact
-
-            name releaseArtifact
-            description releaseDescription
-            url releaseWebsite
-
-            licenses {
-                license {
-                    name licenseName
-                    url licenseUrl
-                }
-            }
-
-            developers {
-                developer {
-                    id developerId
-                    name developerName
-                    email developerEmail
-                }
-            }
-
-            scm {
-                connection gitUrl
-                developerConnection gitUrl
-                url siteUrl
-            }
-        }
-    }
-}
-
-task sourcesJar(type: Jar) {
-    classifier = "sources"
-    from android.sourceSets.main.java.srcDirs
-}
-
-// a temporary replacement
-task javadoc(type: Javadoc) {
-    failOnError false
-    source = android.sourceSets.main.java.srcDirs
-    // Also add the generated R class to avoid errors...
-    // TODO: debug is hard-coded
-    source += "$buildDir/generated/source/r/debug/"
-    // ... but exclude the R classes from the docs
-    excludes += "**/R.java"
-
-    // TODO: "compile" is deprecated in Gradle 4.1,
-    // but "implementation" and "api" are not resolvable :(
-    classpath += configurations.compile
-
-    afterEvaluate {
-        // Wait after evaluation to add the android classpath
-        // to avoid "buildToolsVersion is not specified" error
-        classpath += files(android.getBootClasspath())
-
-        // Process AAR dependencies
-        def aarDependencies = classpath.filter { it.name.endsWith('.aar') }
-        classpath -= aarDependencies
-        aarDependencies.each { aar ->
-            System.out.println("Adding classpath for aar: " + aar.name)
-            // Extract classes.jar from the AAR dependency, and add it to the javadoc classpath
-            def outputPath = "$buildDir/tmp/exploded-aar/${aar.name.replace('.aar', '.jar')}"
-            classpath += files(outputPath)
-
-            // Use a task so the actual extraction only happens before the javadoc task is run
-            dependsOn task(name: "extract ${aar.name}").doLast {
-                extractZipEntry(aar, 'classes.jar', outputPath)
-            }
-        }
-    }
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = "javadoc"
-    from javadoc.destinationDir
 }
 
 artifacts {
-    archives javadocJar
-    archives sourcesJar
+    archives androidSourcesJar
 }
 
-bintray {
-    user = propertyOrDefault("bintrayUser")
-    key = propertyOrDefault("bintrayApiKey")
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId PUBLISH_GROUP_ID
+                artifactId PUBLISH_ARTIFACT_ID
+                version PUBLISH_VERSION
 
-    configurations = ["archives"]
+                if (project.plugins.findPlugin("com.android.library")) {
+                    from components.release
+                } else {
+                    from components.java
+                }
 
-    pkg {
-        repo = releaseRepoName
-        //userOrg = releaseUserOrg
-        name = releaseArtifact
-        desc = releaseDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        issueTrackerUrl = issueTracker
-        githubReleaseNotesFile = releaseNotesFile
-        licenses = allLicenses
-        dryRun = false
-        publish = true
-        override = false
-        publicDownloadNumbers = false
+                artifact androidSourcesJar
 
-        version {
-            desc = releaseDescription
+                pom {
+                    name = PUBLISH_ARTIFACT_ID
+                    description = PUBLISH_ARTIFACT_DESCRIPTION
+                    url = releaseWebsite
+
+                    licenses {
+                        license {
+                            name = licenseName
+                            url = licenseUrl
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = developerId
+                            name = developerName
+                            email = developerEmail
+                        }
+                    }
+
+                    scm {
+                        connection = scmConnection
+                        developerConnection = scmDeveloperConnection
+                        url = siteUrl
+                    }
+                }
+            }
         }
-    }
-}
 
-bintrayUpload.dependsOn("install")
+        repositories {
+            maven {
+                name = publishingHostRepoName
+                url = uri(publishingHostRepoUrl)
 
-// Utility method to extract a single entry from a Zip Archive
-private def extractZipEntry(File archiveFile, String entryPath, String outputPath) {
-    if(!archiveFile.exists()) {
-        throw new GradleException("Archive File $archiveFile not found")
-    }
-
-    def zipFile = new ZipFile(archiveFile)
-
-    zipFile.entries().each {
-        if(it.name == entryPath) {
-            def path = Paths.get(outputPath)
-
-            if(!Files.exists(path)) {
-                Files.createDirectories(path.getParent())
-                Files.copy(zip.getInputStream(it), path)
+                credentials {
+                    username = getPropertyOrDefault("SONATYPE_NEXUS_USERNAME", System.getenv("SONATYPE_NEXUS_USERNAME"))
+                    password = getPropertyOrDefault("SONATYPE_NEXUS_PASSWORD", System.getenv("SONATYPE_NEXUS_PASSWORD"))
+                }
             }
         }
     }
-    zip.close()
+
+    signing {
+        sign publishing.publications
+    }
 }
 
-String propertyOrDefault(String propertyName, String defaultValue = "") {
-    def propertyValue = project.properties[propertyName]
-    return ((propertyValue != null) ? propertyValue : defaultValue)
+private def getPropertyOrDefault(key, defaultValue) {
+    def foundProperty = properties[key]
+    return ((foundProperty != null) ? foundProperty : defaultValue)
 }

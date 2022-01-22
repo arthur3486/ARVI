@@ -1,11 +1,12 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply plugin: "com.github.ben-manes.versions"
-apply from: "common/constants.gradle"
 
 buildscript {
     ext.kotlin_version = "1.5.20"
 
     repositories {
+        jcenter()
+        mavenCentral()
         google()
         gradlePluginPortal()
     }
@@ -18,34 +19,13 @@ buildscript {
 }
 
 allprojects {
+    apply plugin: "com.github.ben-manes.versions"
+    apply from: "${rootDir}/common/constants.gradle"
+
     repositories {
-        google()
         jcenter()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-        maven { url "https://google.bintray.com/exoplayer/" }
-    }
-
-    project.ext {
-        releaseRepoName = rootProject.releaseRepoName
-        releaseUserOrg = rootProject.releaseUserOrg
-        releaseGroupId = rootProject.releaseGroupId
-        releaseVersion = rootProject.releaseVersion
-        releaseVersionCode = rootProject.releaseVersionCode
-        releaseWebsite = rootProject.releaseWebsite
-        releaseLicense = rootProject.releaseLicense
-
-        licenseName = rootProject.licenseName
-        licenseUrl = rootProject.licenseUrl
-        allLicenses = rootProject.allLicenses
-
-        developerId = rootProject.developerId
-        developerName = rootProject.developerName
-        developerEmail = rootProject.developerEmail
-
-        siteUrl = rootProject.siteUrl
-        gitUrl = rootProject.gitUrl
-        issueTracker = rootProject.issueTracker
-        releaseNotesFile = rootProject.releaseNotesFile
+        mavenCentral()
+        google()
     }
 }
 
