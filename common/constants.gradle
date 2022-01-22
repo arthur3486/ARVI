@@ -1,9 +1,9 @@
 
 
 project.ext {
-    compileSdk = 29
-    targetSdk = 29
-    minSdk = 18
+    compileSdk = 31
+    targetSdk = 31
+    minSdk = 21
 
     supportLibraryVersion = "1.1.0"
     coreKtxVersion = "1.1.0"
