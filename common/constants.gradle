@@ -33,6 +33,8 @@ project.ext {
     developerName = "Arthur Ivanets"
     developerEmail = "arthur.ivanets.work@gmail.com"
 
+    libraryDescription = "ExoPlayer-based Android library that makes the implementation of the autoplayable RecyclerView video items an easy task"
+
     publishingHostRepoName = "sonatype"
     publishingHostRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
 
