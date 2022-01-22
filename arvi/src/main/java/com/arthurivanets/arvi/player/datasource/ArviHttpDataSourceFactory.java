@@ -174,7 +174,6 @@ public class ArviHttpDataSourceFactory extends HttpDataSource.BaseFactory {
 
         final DefaultHttpDataSource dataSource = new ArviHttpDataSource(
             this.userAgent,
-            null,
             this.connectTimeoutMillis,
             this.readTimeoutMillis,
             this.allowCrossProtocolRedirects,

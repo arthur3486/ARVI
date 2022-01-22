@@ -19,7 +19,6 @@ package com.arthurivanets.arvi.player.datasource;
 import com.arthurivanets.arvi.player.util.HttpHeaders;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
-import com.google.android.exoplayer2.util.Predicate;
 
 /**
  * An implementation of the {@link DefaultHttpDataSource} with a support
@@ -33,20 +32,18 @@ public class ArviHttpDataSource extends DefaultHttpDataSource {
 
 
 
-    public ArviHttpDataSource(String userAgent, Predicate<String> contentTypePredicate) {
-        super(userAgent, contentTypePredicate);
+    public ArviHttpDataSource(String userAgent) {
+        super(userAgent);
     }
 
 
 
 
     public ArviHttpDataSource(String userAgent,
-                              Predicate<String> contentTypePredicate,
                               int connectTimeoutMillis,
                               int readTimeoutMillis) {
         super(
             userAgent,
-            contentTypePredicate,
             connectTimeoutMillis,
             readTimeoutMillis
         );
@@ -56,14 +53,12 @@ public class ArviHttpDataSource extends DefaultHttpDataSource {
 
 
     public ArviHttpDataSource(String userAgent,
-                              Predicate<String> contentTypePredicate,
                               int connectTimeoutMillis,
                               int readTimeoutMillis,
                               boolean allowCrossProtocolRedirects,
                               RequestProperties defaultRequestProperties) {
         super(
             userAgent,
-            contentTypePredicate,
             connectTimeoutMillis,
             readTimeoutMillis,
             allowCrossProtocolRedirects,
