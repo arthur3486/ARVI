@@ -16,9 +16,9 @@
 
 package com.arthurivanets.arvi;
 
-import com.arthurivanets.arvi.player.creators.PlayerCreator;
-
 import androidx.annotation.NonNull;
+
+import com.arthurivanets.arvi.player.creators.PlayerCreator;
 
 /**
  * Defines a base contract for the concrete {@link PlayerCreatorFactory} implementations.
@@ -29,7 +29,7 @@ public interface PlayerCreatorFactory {
      * Creates a new instance of the {@link PlayerCreator} based on the specified parameters.
      *
      * @param playerProvider the player provider
-     * @param config the desired player configuration
+     * @param config         the desired player configuration
      * @return the created {@link PlayerCreator} instance
      */
     @NonNull

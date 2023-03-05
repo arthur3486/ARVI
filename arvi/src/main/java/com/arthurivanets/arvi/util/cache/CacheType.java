@@ -24,7 +24,6 @@ import androidx.annotation.RestrictTo;
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 public enum CacheType {
 
-
     /**
      * An in-memory (RAM) implementation of {@link Cache}.
      */
@@ -36,16 +35,14 @@ public enum CacheType {
         }
     };
 
-
     /**
      * Creates a new instance of the {@link Cache}.
      *
      * @param concurrent whether to create a synchronized (thread-safe) version of {@link Cache}, or not
-     * @param <K> cache key type
-     * @param <V> cache value type
+     * @param <K>        cache key type
+     * @param <V>        cache value type
      * @return the created {@link Cache}
      */
     abstract <K, V> Cache<K, V> create(boolean concurrent);
-
 
 }

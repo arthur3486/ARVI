@@ -17,8 +17,8 @@
 package com.arthurivanets.sample.model
 
 data class Video(
-    var id : Int,
-    var title : String = "",
-    var videoUrl : String = "",
-    var isMuted : Boolean = false
+    var id: Int,
+    var title: String = "",
+    var videoUrl: String = "",
+    var isMuted: Boolean = false
 )

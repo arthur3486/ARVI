@@ -26,13 +26,14 @@ import com.arthurivanets.adapster.model.Item
 import com.arthurivanets.sample.R
 import com.arthurivanets.sample.model.Video
 
-class VideoItem(itemModel : Video) : BaseItem<Video, VideoItemViewHolder, VideoItemResources>(itemModel) {
+class VideoItem(itemModel: Video) : BaseItem<Video, VideoItemViewHolder, VideoItemResources>(itemModel) {
 
-
-    override fun init(adapter : Adapter<out Item<RecyclerView.ViewHolder, ItemResources>>?,
-                      parent : ViewGroup,
-                      inflater : LayoutInflater,
-                      resources : VideoItemResources?) : VideoItemViewHolder {
+    override fun init(
+        adapter: Adapter<out Item<RecyclerView.ViewHolder, ItemResources>>?,
+        parent: ViewGroup,
+        inflater: LayoutInflater,
+        resources: VideoItemResources?
+    ): VideoItemViewHolder {
         return VideoItemViewHolder(
             parent = parent,
             itemView = inflater.inflate(
@@ -44,10 +45,8 @@ class VideoItem(itemModel : Video) : BaseItem<Video, VideoItemViewHolder, VideoI
         )
     }
 
-
-    override fun getLayout() : Int {
+    override fun getLayout(): Int {
         return R.layout.item_video
     }
-
 
 }

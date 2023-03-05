@@ -27,18 +27,11 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class PreCacheLinearLayoutManager extends LinearLayoutManager implements HasPreCachingSupport {
 
-
     private int extraLayoutSpace = -1;
-
-
-
 
     public PreCacheLinearLayoutManager(Context context) {
         super(context);
     }
-
-
-
 
     public PreCacheLinearLayoutManager(Context context,
                                        int orientation,
@@ -49,9 +42,6 @@ public class PreCacheLinearLayoutManager extends LinearLayoutManager implements 
             reverseLayout
         );
     }
-
-
-
 
     public PreCacheLinearLayoutManager(Context context,
                                        AttributeSet attrs,
@@ -65,23 +55,14 @@ public class PreCacheLinearLayoutManager extends LinearLayoutManager implements 
         );
     }
 
-
-
-
     @Override
     public final void setExtraLayoutSpace(int extraLayoutSpace) {
         this.extraLayoutSpace = extraLayoutSpace;
     }
 
-
-
-
     @Override
     protected final int getExtraLayoutSpace(RecyclerView.State state) {
         return ((this.extraLayoutSpace > 0) ? this.extraLayoutSpace : super.getExtraLayoutSpace(state));
     }
-
-
-
 
 }

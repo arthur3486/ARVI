@@ -24,8 +24,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
-
-    override fun init(savedInstanceState : Bundle?) {
+    override fun init(savedInstanceState: Bundle?) {
         basicDemoButton.setOnClickListener {
             startActivity(VideosActivity.newBasicInstance(this@MainActivity))
         }
@@ -35,10 +34,8 @@ class MainActivity : BaseActivity() {
         }
     }
 
-
-    override fun getLayoutId() : Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_main
     }
-
 
 }

@@ -21,14 +21,13 @@ import com.arthurivanets.arvi.ktx.playerProvider
 
 class ArviApplication : Application() {
 
-
     companion object {
 
-        @JvmStatic lateinit var INSTANCE : ArviApplication
+        @JvmStatic
+        lateinit var INSTANCE: ArviApplication
             private set
 
     }
-
 
     override fun onCreate() {
         super.onCreate()
@@ -36,14 +35,12 @@ class ArviApplication : Application() {
         INSTANCE = this
     }
 
-
-    override fun onTrimMemory(level : Int) {
+    override fun onTrimMemory(level: Int) {
         super.onTrimMemory(level)
 
-        if(level >= TRIM_MEMORY_BACKGROUND) {
+        if (level >= TRIM_MEMORY_BACKGROUND) {
             playerProvider.release()
         }
     }
-
 
 }

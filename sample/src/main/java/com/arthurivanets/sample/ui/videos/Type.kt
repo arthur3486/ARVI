@@ -21,20 +21,17 @@ import com.arthurivanets.sample.R
 
 enum class Type {
 
-
     BASIC {
-        override fun getTitle(context : Context) : CharSequence {
+        override fun getTitle(context: Context): CharSequence {
             return context.getString(R.string.title_basic_demo)
         }
     },
     ADAPSTER {
-        override fun getTitle(context : Context) : CharSequence {
+        override fun getTitle(context: Context): CharSequence {
             return context.getString(R.string.title_adapster_demo)
         }
     };
 
-
-    abstract fun getTitle(context : Context) : CharSequence
-
+    abstract fun getTitle(context: Context): CharSequence
 
 }

@@ -19,10 +19,10 @@ package com.arthurivanets.arvi.widget;
 import android.view.View;
 import android.view.ViewParent;
 
+import androidx.annotation.NonNull;
+
 import com.arthurivanets.arvi.Config;
 import com.arthurivanets.arvi.model.PlaybackInfo;
-
-import androidx.annotation.NonNull;
 
 /**
  * A base contract to be implemented by the item that support the playback management.

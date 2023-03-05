@@ -16,9 +16,9 @@
 
 package com.arthurivanets.arvi.widget;
 
-import java.util.Set;
-
 import androidx.annotation.NonNull;
+
+import java.util.Set;
 
 /**
  * A base contract to be implemented by the concrete {@link PlayableItemsContainer}s.
@@ -26,7 +26,6 @@ import androidx.annotation.NonNull;
  * video media autoplay)
  */
 public interface PlayableItemsContainer {
-
 
     /**
      * Defines how many videos can be played at a time.
@@ -38,7 +37,6 @@ public interface PlayableItemsContainer {
 
     }
 
-
     /**
      * Defines when the playback can be started.
      */
@@ -49,7 +47,6 @@ public interface PlayableItemsContainer {
         IDLING
 
     }
-
 
     /**
      * Starts the playback of the visible {@link Playable} items.

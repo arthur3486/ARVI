@@ -23,12 +23,10 @@ import androidx.annotation.NonNull;
  */
 public final class ArviPlugins {
 
-
     private static volatile PlayerCreatorFactory playerCreatorFactory = new DefaultPlayerCreatorFactory();
     private static volatile PlayerNodePoolFactory playerNodePoolFactory = new DefaultPlayerNodePoolFactory();
 
     private static volatile boolean isLockedDown = false;
-
 
     /**
      * "Locks down" the plugin injection.
@@ -38,7 +36,6 @@ public final class ArviPlugins {
         isLockedDown = true;
     }
 
-
     /**
      * Retrieves the current lock-down state.
      *
@@ -47,7 +44,6 @@ public final class ArviPlugins {
     public static boolean isLockedDown() {
         return isLockedDown;
     }
-
 
     /**
      * Injects the {@link PlayerCreatorFactory} to be used by the {@link PlayerProvider}.
@@ -60,7 +56,6 @@ public final class ArviPlugins {
         playerCreatorFactory = factory;
     }
 
-
     /**
      * Retrieves the currently injected {@link PlayerCreatorFactory}.
      *
@@ -70,7 +65,6 @@ public final class ArviPlugins {
     public static PlayerCreatorFactory getPlayerCreatorFactory() {
         return playerCreatorFactory;
     }
-
 
     /**
      * Injects the {@link PlayerNodePoolFactory} to be used by the {@link PlayerProvider}.
@@ -83,7 +77,6 @@ public final class ArviPlugins {
         playerNodePoolFactory = factory;
     }
 
-
     /**
      * Retrieves the currently injected {@link PlayerNodePoolFactory}.
      *
@@ -94,17 +87,14 @@ public final class ArviPlugins {
         return playerNodePoolFactory;
     }
 
-
     private static void checkLockDownState() {
-        if(isLockedDown) {
+        if (isLockedDown) {
             throw new IllegalStateException("The Plugins can not be changed anymore.");
         }
     }
 
-
     private ArviPlugins() {
         throw new IllegalStateException("Not instantiatable!");
     }
-
 
 }

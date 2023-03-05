@@ -16,10 +16,10 @@
 
 package com.arthurivanets.arvi;
 
-import com.arthurivanets.arvi.player.Player;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.arthurivanets.arvi.player.Player;
 
 /**
  * A base contract for the concrete implementations of the {@link PlayerNodePool}.
@@ -37,7 +37,7 @@ interface PlayerNodePool {
      * Creates the {@link PlayerNode} from the specified key and {@link Player},
      * and adds it to the current player node pool.
      *
-     * @param key the key to map the player to
+     * @param key    the key to map the player to
      * @param player the player to be added to the pool
      */
     void add(@NonNull String key, @NonNull Player player);

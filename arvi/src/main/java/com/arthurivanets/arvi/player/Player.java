@@ -16,6 +16,11 @@
 
 package com.arthurivanets.arvi.player;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.arthurivanets.arvi.player.util.VolumeController;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -26,16 +31,10 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import androidx.annotation.FloatRange;
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 /**
  * A base contract to be implemented by the concrete Player implementations.
  */
 public interface Player {
-
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
@@ -52,7 +51,6 @@ public interface Player {
         int ENDED = com.google.android.exoplayer2.Player.STATE_ENDED;
 
     }
-
 
     /**
      * Initializes the player and related internal components.
@@ -239,7 +237,6 @@ public interface Player {
      */
     boolean isAttached();
 
-
     /**
      * A delegate used for the handling of the {@link Player}-related attachment events.
      */
@@ -271,7 +268,6 @@ public interface Player {
         boolean isAttached(@NonNull Player player);
 
     }
-
 
     /**
      * A {@link Player} event listener.
@@ -308,6 +304,5 @@ public interface Player {
         void onPlayerError(ExoPlaybackException error);
 
     }
-
 
 }

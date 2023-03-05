@@ -20,5 +20,5 @@ import com.arthurivanets.adapster.markers.ItemResources
 import com.arthurivanets.arvi.Config
 
 class VideoItemResources(
-    val arviConfig : Config
+    val arviConfig: Config
 ) : ItemResources

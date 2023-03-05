@@ -35,56 +35,54 @@ import kotlinx.android.synthetic.main.view_top_bar.*
 
 class VideosActivity : BaseActivity() {
 
-
     private var type = Type.BASIC
 
-    private lateinit var adapter : VideosViewPagerAdapter
-
+    private lateinit var adapter: VideosViewPagerAdapter
 
     companion object {
 
         const val TAG = "VideosActivity"
         private const val EXTRA_TYPE = "type"
 
-        @JvmStatic fun newBasicInstance(context : Context) : Intent {
+        @JvmStatic
+        fun newBasicInstance(context: Context): Intent {
             return newInstance(context, Type.BASIC)
         }
 
-        @JvmStatic fun newAdapsterInstance(context : Context) : Intent {
+        @JvmStatic
+        fun newAdapsterInstance(context: Context): Intent {
             return newInstance(context, Type.ADAPSTER)
         }
 
-        @JvmStatic fun newInstance(context : Context, type : Type) : Intent {
+        @JvmStatic
+        fun newInstance(context: Context, type: Type): Intent {
             return Intent(context, VideosActivity::class.java)
                 .putExtras(newExtrasBundle(type))
         }
 
-        @JvmStatic fun newExtrasBundle(type : Type) : Bundle {
+        @JvmStatic
+        fun newExtrasBundle(type: Type): Bundle {
             return bundleOf(EXTRA_TYPE to type)
         }
 
     }
 
-
-    override fun fetchExtras(extras : Bundle) {
+    override fun fetchExtras(extras: Bundle) {
         super.fetchExtras(extras)
 
         type = ((extras.getSerializable(EXTRA_TYPE) as Type?) ?: type)
     }
 
-
-    override fun init(savedInstanceState : Bundle?) {
+    override fun init(savedInstanceState: Bundle?) {
         initTopBar()
         initViewPager()
         initTabLayout()
     }
 
-
     private fun initTopBar() {
         top_bar_back_button.setOnClickListener { onBackPressed() }
         top_bar_title.text = type.getTitle(this)
     }
-
 
     private fun initViewPager() {
         with(viewPager) {
@@ -95,8 +93,7 @@ class VideosActivity : BaseActivity() {
         }
     }
 
-
-    private fun initAdapter() : VideosViewPagerAdapter {
+    private fun initAdapter(): VideosViewPagerAdapter {
         return VideosViewPagerAdapter(supportFragmentManager).apply {
             populateAdapter()
 
@@ -105,9 +102,8 @@ class VideosActivity : BaseActivity() {
         }
     }
 
-
     private fun BaseViewPagerAdapter.populateAdapter() {
-        when(type) {
+        when (type) {
             Type.BASIC -> {
                 addFragment(BasicVideosFragment.newInstance(PlayableItemsContainer.AutoplayMode.ONE_AT_A_TIME))
                 addFragment(BasicVideosFragment.newInstance(PlayableItemsContainer.AutoplayMode.MULTIPLE_SIMULTANEOUSLY))
@@ -119,14 +115,12 @@ class VideosActivity : BaseActivity() {
         }
     }
 
-
     private fun initTabLayout() {
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.setSelectedTabIndicatorColor(getColorCompat(R.color.colorAccent))
         initTabLayoutTabs()
         tabLayout.getTabAt(0)?.select()
     }
-
 
     private fun initTabLayoutTabs() {
         with(tabLayout) {
@@ -135,10 +129,8 @@ class VideosActivity : BaseActivity() {
         }
     }
 
-
-    override fun getLayoutId() : Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_videos
     }
-
 
 }

@@ -35,36 +35,34 @@ import kotlinx.android.synthetic.main.fragment_videos.*
 
 class AdapsterVideosFragment : BaseFragment(), CanManagePlayback, HasTitle {
 
-
     private var autoplayMode = PlayableItemsContainer.AutoplayMode.ONE_AT_A_TIME
-
 
     companion object {
 
         const val TAG = "AdapsterVideosFragment"
         private const val EXTRA_AUTOPLAY_MODE = "autoplay_mode"
 
-        @JvmStatic fun newInstance(autoplayMode : PlayableItemsContainer.AutoplayMode) : AdapsterVideosFragment {
+        @JvmStatic
+        fun newInstance(autoplayMode: PlayableItemsContainer.AutoplayMode): AdapsterVideosFragment {
             return AdapsterVideosFragment().apply {
                 arguments = newBundleInstance(autoplayMode)
             }
         }
 
-        @JvmStatic fun newBundleInstance(autoplayMode : PlayableItemsContainer.AutoplayMode) : Bundle {
+        @JvmStatic
+        fun newBundleInstance(autoplayMode: PlayableItemsContainer.AutoplayMode): Bundle {
             return bundleOf(EXTRA_AUTOPLAY_MODE to autoplayMode)
         }
 
     }
 
-
-    override fun fetchExtras(extras : Bundle) {
+    override fun fetchExtras(extras: Bundle) {
         super.fetchExtras(extras)
 
         autoplayMode = ((extras.getSerializable(EXTRA_AUTOPLAY_MODE) as PlayableItemsContainer.AutoplayMode?) ?: autoplayMode)
     }
 
-
-    override fun init(savedInstanceState : Bundle?) {
+    override fun init(savedInstanceState: Bundle?) {
         with(recyclerView) {
             setPlaybackTriggeringStates(
                 PlayableItemsContainer.PlaybackTriggeringState.IDLING,
@@ -90,25 +88,21 @@ class AdapsterVideosFragment : BaseFragment(), CanManagePlayback, HasTitle {
         }
     }
 
-
     override fun startPlayback() {
         recyclerView?.startPlayback()
     }
-
 
     override fun stopPlayback() {
         recyclerView?.stopPlayback()
     }
 
-
     override fun onResume() {
         super.onResume()
 
-        if(userVisibleHint) {
+        if (userVisibleHint) {
             recyclerView.onResume()
         }
     }
-
 
     override fun onPause() {
         super.onPause()
@@ -116,24 +110,21 @@ class AdapsterVideosFragment : BaseFragment(), CanManagePlayback, HasTitle {
         recyclerView.onPause()
     }
 
-
     override fun onBecameVisibleToUser() {
         super.onBecameVisibleToUser()
 
-        if(isViewCreated) {
+        if (isViewCreated) {
             recyclerView.onResume()
         }
     }
 
-
     override fun onBecameInvisibleToUser() {
         super.onBecameInvisibleToUser()
 
-        if(isViewCreated) {
+        if (isViewCreated) {
             recyclerView.onPause()
         }
     }
-
 
     override fun onRecycle() {
         super.onRecycle()
@@ -141,18 +132,15 @@ class AdapsterVideosFragment : BaseFragment(), CanManagePlayback, HasTitle {
         recyclerView?.onDestroy()
     }
 
-
-    override fun getLayoutId() : Int {
+    override fun getLayoutId(): Int {
         return R.layout.fragment_videos
     }
 
-
-    override fun getTitle(context : Context) : CharSequence {
-        return when(autoplayMode) {
+    override fun getTitle(context: Context): CharSequence {
+        return when (autoplayMode) {
             PlayableItemsContainer.AutoplayMode.MULTIPLE_SIMULTANEOUSLY -> context.getString(R.string.title_videos_fragment_playback_multiple_simultaneously)
             else -> context.getString(R.string.title_videos_fragment_playback_one_at_a_time)
         }
     }
-
 
 }

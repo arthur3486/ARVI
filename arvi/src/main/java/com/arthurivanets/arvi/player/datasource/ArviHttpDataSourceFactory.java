@@ -16,19 +16,18 @@
 
 package com.arthurivanets.arvi.player.datasource;
 
+import androidx.annotation.NonNull;
+
 import com.arthurivanets.arvi.util.misc.Preconditions;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.upstream.TransferListener;
-
-import androidx.annotation.NonNull;
 
 /**
  * An implementation of the {@link HttpDataSource.Factory} with the support for the
  * Request Authorization using a dedicated {@link RequestAuthorizer}.
  */
 public class ArviHttpDataSourceFactory extends HttpDataSource.BaseFactory {
-
 
     private final String userAgent;
 
@@ -43,9 +42,6 @@ public class ArviHttpDataSourceFactory extends HttpDataSource.BaseFactory {
 
     private RequestAuthorizer requestAuthorizer;
 
-
-
-
     /**
      * Constructs an ArviHttpDataSourceFactory. Sets {@link DefaultHttpDataSource#DEFAULT_CONNECT_TIMEOUT_MILLIS} as the connection timeout,
      * {@link DefaultHttpDataSource#DEFAULT_READ_TIMEOUT_MILLIS} as the read timeout and disables cross-protocol redirects.
@@ -56,15 +52,12 @@ public class ArviHttpDataSourceFactory extends HttpDataSource.BaseFactory {
         this(userAgent, null);
     }
 
-
-
-
     /**
      * Constructs an ArviHttpDataSourceFactory. Sets {@link DefaultHttpDataSource#DEFAULT_CONNECT_TIMEOUT_MILLIS} as the connection timeout,
      * {@link DefaultHttpDataSource#DEFAULT_READ_TIMEOUT_MILLIS} as the read timeout and disables cross-protocol redirects.
      *
      * @param userAgent The User-Agent string that should be used.
-     * @param listener An optional listener.
+     * @param listener  An optional listener.
      * @see #DefaultHttpDataSourceFactory(String, TransferListener, int, int, boolean)
      */
     public ArviHttpDataSourceFactory(String userAgent, TransferListener listener) {
@@ -78,18 +71,15 @@ public class ArviHttpDataSourceFactory extends HttpDataSource.BaseFactory {
         );
     }
 
-
-
-
     /**
-     * @param userAgent The User-Agent string that should be used.
-     * @param listener An optional listener.
-     * @param connectTimeoutMillis The connection timeout that should be used when requesting remote
-     *        data, in milliseconds. A timeout of zero is interpreted as an infinite timeout.
-     * @param readTimeoutMillis The read timeout that should be used when requesting remote data, in
-     *        milliseconds. A timeout of zero is interpreted as an infinite timeout.
+     * @param userAgent                   The User-Agent string that should be used.
+     * @param listener                    An optional listener.
+     * @param connectTimeoutMillis        The connection timeout that should be used when requesting remote
+     *                                    data, in milliseconds. A timeout of zero is interpreted as an infinite timeout.
+     * @param readTimeoutMillis           The read timeout that should be used when requesting remote data, in
+     *                                    milliseconds. A timeout of zero is interpreted as an infinite timeout.
      * @param allowCrossProtocolRedirects Whether cross-protocol redirects (i.e. redirects from HTTP
-     *        to HTTPS and vice versa) are enabled.
+     *                                    to HTTPS and vice versa) are enabled.
      */
     public ArviHttpDataSourceFactory(String userAgent,
                                      TransferListener listener,
@@ -106,9 +96,6 @@ public class ArviHttpDataSourceFactory extends HttpDataSource.BaseFactory {
         this.requestProperties = new HttpDataSource.RequestProperties();
     }
 
-
-
-
     /**
      * Sets the Connect Timeout (In Milliseconds) for the Http Data Requests created by this factory.
      *
@@ -120,9 +107,6 @@ public class ArviHttpDataSourceFactory extends HttpDataSource.BaseFactory {
         this.connectTimeoutMillis = connectTimeoutInMillis;
     }
 
-
-
-
     /**
      * Sets the Read Timeout (In Milliseconds) for the Http Data Requests created by this factory.
      *
@@ -133,9 +117,6 @@ public class ArviHttpDataSourceFactory extends HttpDataSource.BaseFactory {
 
         this.readTimeoutMillis = readTimeoutInMillis;
     }
-
-
-
 
     /**
      * Adds a Request Property (HTTP Header) to be used during the performance of the request.
@@ -150,9 +131,6 @@ public class ArviHttpDataSourceFactory extends HttpDataSource.BaseFactory {
         this.requestProperties.set(key, value);
     }
 
-
-
-
     /**
      * Sets the {@link RequestAuthorizer} to be used for the authorization of the requests performed
      * by the Data Sources created by this Factory.
@@ -162,9 +140,6 @@ public class ArviHttpDataSourceFactory extends HttpDataSource.BaseFactory {
     public final void setRequestAuthorizer(RequestAuthorizer requestAuthorizer) {
         this.requestAuthorizer = requestAuthorizer;
     }
-
-
-
 
     @Override
     protected DefaultHttpDataSource createDataSourceInternal(HttpDataSource.RequestProperties defaultRequestProperties) {
@@ -180,14 +155,11 @@ public class ArviHttpDataSourceFactory extends HttpDataSource.BaseFactory {
             finalRequestProperties
         ).setRequestAuthorizer(this.requestAuthorizer);
 
-        if(this.listener != null) {
+        if (this.listener != null) {
             dataSource.addTransferListener(this.listener);
         }
 
         return dataSource;
     }
-
-
-
 
 }

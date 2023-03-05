@@ -21,6 +21,9 @@ import android.net.Uri;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.LoopingMediaSource;
@@ -32,9 +35,6 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.source.smoothstreaming.DefaultSsChunkSource;
 import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
 import com.google.android.exoplayer2.upstream.DataSource;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import static com.arthurivanets.arvi.util.misc.ExoPlayerUtils.addEventListenerIfNonNull;
 import static com.google.android.exoplayer2.util.Util.inferContentType;
@@ -52,7 +52,8 @@ public interface MediaSourceBuilder {
      */
     MediaSourceBuilder DEFAULT = new MediaSourceBuilder() {
 
-        @NonNull @Override
+        @NonNull
+        @Override
         public MediaSource buildMediaSource(@NonNull Context context,
                                             @NonNull Uri fileUri,
                                             @Nullable String fileExtension,
@@ -62,7 +63,7 @@ public interface MediaSourceBuilder {
                                             @Nullable MediaSourceEventListener eventListener) {
             @C.ContentType final int type = TextUtils.isEmpty(fileExtension) ? inferContentType(fileUri) : inferContentType("." + fileExtension);
 
-            switch(type) {
+            switch (type) {
 
                 case C.TYPE_SS:
                     final SsMediaSource ssMediaSource = new SsMediaSource.Factory(
@@ -128,7 +129,8 @@ public interface MediaSourceBuilder {
      */
     MediaSourceBuilder LOOPING = new MediaSourceBuilder() {
 
-        @NonNull @Override
+        @NonNull
+        @Override
         public MediaSource buildMediaSource(@NonNull Context context,
                                             @NonNull Uri fileUri,
                                             @Nullable String fileExtension,
@@ -148,7 +150,6 @@ public interface MediaSourceBuilder {
         }
 
     };
-
 
     /**
      * Builds the {@link MediaSource} for the specified configuration.
@@ -170,6 +171,5 @@ public interface MediaSourceBuilder {
                                  @NonNull DataSource.Factory manifestDataSourceFactory,
                                  @NonNull DataSource.Factory mediaDataSourceFactory,
                                  @Nullable MediaSourceEventListener eventListener);
-
 
 }

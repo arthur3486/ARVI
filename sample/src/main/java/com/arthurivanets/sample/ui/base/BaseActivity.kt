@@ -23,8 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 abstract class BaseActivity : AppCompatActivity() {
 
-
-    final override fun onCreate(savedInstanceState : Bundle?) {
+    final override fun onCreate(savedInstanceState: Bundle?) {
         intent?.extras?.let(::fetchExtras)
         preInit()
         super.onCreate(savedInstanceState)
@@ -33,41 +32,33 @@ abstract class BaseActivity : AppCompatActivity() {
         postInit()
     }
 
-
     @CallSuper
-    protected open fun fetchExtras(extras : Bundle) {
+    protected open fun fetchExtras(extras: Bundle) {
         //
     }
-
 
     protected open fun preInit() {
         //
     }
 
-
-    protected open fun init(savedInstanceState : Bundle?) {
+    protected open fun init(savedInstanceState: Bundle?) {
         //
     }
-
 
     protected open fun postInit() {
         //
     }
-
 
     final override fun onDestroy() {
         onRecycle()
         super.onDestroy()
     }
 
-
     protected open fun onRecycle() {
         //
     }
 
-
     @LayoutRes
-    abstract fun getLayoutId() : Int
-
+    abstract fun getLayoutId(): Int
 
 }

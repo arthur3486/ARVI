@@ -21,7 +21,6 @@ package com.arthurivanets.sample.util.extensions
 import android.widget.ProgressBar
 import androidx.annotation.ColorInt
 
-
-fun ProgressBar.setColor(@ColorInt color : Int) {
+fun ProgressBar.setColor(@ColorInt color: Int) {
     this.indeterminateDrawable = this.indeterminateDrawable?.applyColor(color)
 }
