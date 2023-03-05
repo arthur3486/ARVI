@@ -20,18 +20,16 @@ import androidx.viewpager.widget.ViewPager
 import com.arthurivanets.sample.util.extensions.ifCanManagePlayback
 import com.arthurivanets.sample.util.extensions.ifFragmentPagerAdapter
 
-open class ArviViewPagerPlaybackController(private var viewPager : ViewPager?) : OnPageChangeListenerAdapter() {
+open class ArviViewPagerPlaybackController(private var viewPager: ViewPager?) : OnPageChangeListenerAdapter() {
 
-
-    override fun onPageScrollStateChanged(state : Int) {
-        if((viewPager != null) && (state == ViewPager.SCROLL_STATE_IDLE)) {
+    override fun onPageScrollStateChanged(state: Int) {
+        if ((viewPager != null) && (state == ViewPager.SCROLL_STATE_IDLE)) {
             viewPager!!.adapter?.ifFragmentPagerAdapter {
-                getItem(viewPager!!.currentItem)?.ifCanManagePlayback {
+                getItem(viewPager!!.currentItem).ifCanManagePlayback {
                     startPlayback()
                 }
             }
         }
     }
-
 
 }

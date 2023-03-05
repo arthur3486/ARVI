@@ -19,12 +19,12 @@ package com.arthurivanets.arvi.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.arthurivanets.arvi.util.misc.Preconditions;
-
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.math.MathUtils;
+
+import com.arthurivanets.arvi.util.misc.Preconditions;
 
 /**
  * A model object used to represent the Video-related Volume Info.
@@ -32,28 +32,18 @@ import androidx.core.math.MathUtils;
  */
 public final class VolumeInfo implements Parcelable {
 
-
     private float audioVolume;
 
     private boolean isMuted;
-
-
-
 
     public VolumeInfo() {
         this(1f, false);
     }
 
-
-
-
     public VolumeInfo(float audioVolume, boolean isMuted) {
         this.audioVolume = audioVolume;
         this.isMuted = isMuted;
     }
-
-
-
 
     public VolumeInfo(@NonNull VolumeInfo info) {
         Preconditions.nonNull(info);
@@ -62,16 +52,10 @@ public final class VolumeInfo implements Parcelable {
         this.isMuted = info.isMuted;
     }
 
-
-
-
     private VolumeInfo(Parcel in) {
         this.audioVolume = in.readFloat();
         this.isMuted = (in.readByte() != 0);
     }
-
-
-
 
     /**
      * Sets the Audio Volume.
@@ -85,9 +69,6 @@ public final class VolumeInfo implements Parcelable {
         return this;
     }
 
-
-
-
     /**
      * Retrieves the Audio Volume Ratio.
      *
@@ -97,9 +78,6 @@ public final class VolumeInfo implements Parcelable {
     public final float getVolume() {
         return this.audioVolume;
     }
-
-
-
 
     /**
      * Sets the Audio "Muted" state.
@@ -113,9 +91,6 @@ public final class VolumeInfo implements Parcelable {
         return this;
     }
 
-
-
-
     /**
      * Retrieves the muted state of the Audio.
      *
@@ -124,9 +99,6 @@ public final class VolumeInfo implements Parcelable {
     public final boolean isMuted() {
         return this.isMuted;
     }
-
-
-
 
     @Override
     public final int hashCode() {
@@ -138,33 +110,21 @@ public final class VolumeInfo implements Parcelable {
         return result;
     }
 
-
-
-
     @Override
     public final boolean equals(@Nullable Object obj) {
         return ((obj instanceof VolumeInfo) && (obj.hashCode() == hashCode()));
     }
-
-
-
 
     @Override
     public final int describeContents() {
         return 0;
     }
 
-
-
-
     @Override
     public final void writeToParcel(Parcel dest, int flags) {
         dest.writeFloat(this.audioVolume);
         dest.writeByte(this.isMuted ? ((byte) 1) : ((byte) 0));
     }
-
-
-
 
     public static final Creator<VolumeInfo> CREATOR = new ClassLoaderCreator<VolumeInfo>() {
 
@@ -184,8 +144,5 @@ public final class VolumeInfo implements Parcelable {
         }
 
     };
-
-
-
 
 }

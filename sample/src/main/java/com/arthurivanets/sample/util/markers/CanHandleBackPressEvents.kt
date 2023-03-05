@@ -18,6 +18,6 @@ package com.arthurivanets.sample.util.markers
 
 interface CanHandleBackPressEvents {
 
-    fun onBackPressed() : Boolean
+    fun onBackPressed(): Boolean
 
 }

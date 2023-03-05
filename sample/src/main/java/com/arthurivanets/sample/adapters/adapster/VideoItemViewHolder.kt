@@ -32,30 +32,26 @@ import com.arthurivanets.sample.util.extensions.makeVisible
 import com.arthurivanets.sample.util.extensions.setColor
 
 class VideoItemViewHolder(
-    parent : ViewGroup,
-    itemView : View,
-    private val resources : VideoItemResources?
+    parent: ViewGroup,
+    itemView: View,
+    private val resources: VideoItemResources?
 ) : AdapsterPlayableItemViewHolder<Video>(parent, itemView) {
-
 
     val titleTv = itemView.findViewById<TextView>(R.id.titleTv)
     val progressBar = itemView.findViewById<ProgressBar>(R.id.progressBar)
     val errorIconIv = itemView.findViewById<ImageView>(R.id.errorIconIv)
 
-
-    override fun bindData(data : Video?) {
+    override fun bindData(data: Video?) {
         super.bindData(data)
 
         data?.let(::handleData)
     }
 
-
-    private fun handleData(data : Video) {
+    private fun handleData(data: Video) {
         handleInfoViews()
 
         titleTv.text = data.title
     }
-
 
     private fun handleInfoViews() {
         progressBar.makeGone()
@@ -64,26 +60,22 @@ class VideoItemViewHolder(
         errorIconIv.makeGone()
     }
 
-
-    override fun getUrl() : String {
+    override fun getUrl(): String {
         return (boundData?.videoUrl ?: "")
     }
 
-
-    override fun getConfig() : Config {
+    override fun getConfig(): Config {
         return (resources?.arviConfig ?: super.getConfig())
     }
 
-
-    override fun isLooping() : Boolean {
+    override fun isLooping(): Boolean {
         return true
     }
 
-
-    override fun onStateChanged(playbackState : PlaybackState) {
+    override fun onStateChanged(playbackState: PlaybackState) {
         super.onStateChanged(playbackState)
 
-        when(playbackState) {
+        when (playbackState) {
             PlaybackState.BUFFERING -> onBufferingState()
             PlaybackState.READY -> onReadyState()
             PlaybackState.PAUSED -> onPausedState()
@@ -92,12 +84,10 @@ class VideoItemViewHolder(
         }
     }
 
-
     private fun onBufferingState() {
         progressBar.makeVisible()
         errorIconIv.makeGone()
     }
-
 
     private fun onReadyState() {
         progressBar.makeGone()
@@ -106,21 +96,17 @@ class VideoItemViewHolder(
         boundData?.isMuted?.let(::setMuted)
     }
 
-
     private fun onPausedState() {
         progressBar.makeGone()
     }
-
 
     private fun onStoppedState() {
         progressBar.makeGone()
     }
 
-
     private fun onErrorState() {
         progressBar.makeGone()
         errorIconIv.makeVisible()
     }
-
 
 }

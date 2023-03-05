@@ -20,6 +20,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.arthurivanets.arvi.player.Player;
 import com.arthurivanets.arvi.player.creators.PlayerCreator;
 import com.arthurivanets.arvi.util.misc.Preconditions;
@@ -32,9 +35,6 @@ import java.net.CookiePolicy;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import static com.arthurivanets.arvi.BuildConfig.LIBRARY_NAME;
 import static com.google.android.exoplayer2.util.Util.getUserAgent;
 
@@ -43,7 +43,6 @@ import static com.google.android.exoplayer2.util.Util.getUserAgent;
  * in the context of the application.
  */
 public final class PlayerProviderImpl implements PlayerProvider {
-
 
     public static final Config DEFAULT_CONFIG = new Config.Builder().build();
 
@@ -57,15 +56,12 @@ public final class PlayerProviderImpl implements PlayerProvider {
     private final Map<Config, PlayerCreator> mConfigCreatorMap;
     private final Map<PlayerCreator, PlayerNodePool> mCreatorNodePoolMap;
 
-
-
-
     public static PlayerProvider getInstance(@NonNull Context context) {
         Preconditions.nonNull(context);
 
-        if(sInstance == null) {
-            synchronized(PlayerProviderImpl.class) {
-                if(sInstance == null) {
+        if (sInstance == null) {
+            synchronized (PlayerProviderImpl.class) {
+                if (sInstance == null) {
                     sInstance = new PlayerProviderImpl(context.getApplicationContext());
                 }
             }
@@ -73,9 +69,6 @@ public final class PlayerProviderImpl implements PlayerProvider {
 
         return sInstance;
     }
-
-
-
 
     private PlayerProviderImpl(Context context) {
         ArviPlugins.lockDown();
@@ -88,21 +81,15 @@ public final class PlayerProviderImpl implements PlayerProvider {
         initCookieManager();
     }
 
-
-
-
     private void initCookieManager() {
         // Adapt from ExoPlayer demo app. Start this on demand.
         final CookieManager cookieManager = new CookieManager();
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ORIGINAL_SERVER);
 
-        if(CookieHandler.getDefault() != cookieManager) {
+        if (CookieHandler.getDefault() != cookieManager) {
             CookieHandler.setDefault(cookieManager);
         }
     }
-
-
-
 
     @NonNull
     @Override
@@ -110,26 +97,17 @@ public final class PlayerProviderImpl implements PlayerProvider {
         return createMediaSource(DEFAULT_CONFIG, uri);
     }
 
-
-
-
     @NonNull
     @Override
     public final MediaSource createMediaSource(@NonNull Uri uri, boolean isLooping) {
         return createMediaSource(DEFAULT_CONFIG, uri, isLooping);
     }
 
-
-
-
     @NonNull
     @Override
     public final MediaSource createMediaSource(@NonNull Config config, @NonNull Uri uri) {
         return createMediaSource(config, uri, false);
     }
-
-
-
 
     @NonNull
     @Override
@@ -145,17 +123,11 @@ public final class PlayerProviderImpl implements PlayerProvider {
         return (isLooping ? new LoopingMediaSource(mediaSource) : mediaSource);
     }
 
-
-
-
     @NonNull
     @Override
     public final String getLibraryName() {
         return mLibraryName;
     }
-
-
-
 
     @NonNull
     @Override
@@ -163,17 +135,11 @@ public final class PlayerProviderImpl implements PlayerProvider {
         return mContext;
     }
 
-
-
-
     @Nullable
     @Override
     public final Player getPlayer(@NonNull String key) {
         return getPlayer(DEFAULT_CONFIG, key);
     }
-
-
-
 
     @Nullable
     @Override
@@ -186,17 +152,11 @@ public final class PlayerProviderImpl implements PlayerProvider {
         return (((correspondingPool != null) && correspondingPool.contains(key)) ? correspondingPool.get(key).getPlayer() : null);
     }
 
-
-
-
     @NonNull
     @Override
     public final Player getOrInitPlayer(@NonNull String key) {
         return getOrInitPlayer(DEFAULT_CONFIG, key);
     }
-
-
-
 
     @NonNull
     @Override
@@ -210,16 +170,16 @@ public final class PlayerProviderImpl implements PlayerProvider {
 
         PlayerNode playerNode = playerNodePool.get(key);
 
-        if(playerNode == null) {
+        if (playerNode == null) {
             // checking to see if there's a free (detached) PlayerNode to be reused
             final PlayerNode freePlayerNode = playerNodePool.acquireFree(key);
 
             // in case of the absence of the free (detached) PlayerNode
-            if(freePlayerNode == null) {
+            if (freePlayerNode == null) {
                 // If the pool is full, we need to pick the PlayerNode
                 // that is considered "the oldest" in terms of the last access time,
                 // otherwise we can create a brand-new instance of the PlayerNode and add it to the pool
-                if(playerNodePool.isFull()) {
+                if (playerNodePool.isFull()) {
                     playerNode = playerNodePool.acquireOldest(key);
                 } else {
                     // creating a brand-new PlayerNode instance
@@ -237,9 +197,6 @@ public final class PlayerProviderImpl implements PlayerProvider {
         return playerNode.getPlayer();
     }
 
-
-
-
     private Pair<PlayerCreator, PlayerNodePool> getOrInit(Config config) {
         final PlayerCreator creator = getOrInitCreator(config);
         final PlayerNodePool nodePool = getOrInitNodePool(creator);
@@ -247,13 +204,10 @@ public final class PlayerProviderImpl implements PlayerProvider {
         return new Pair<>(creator, nodePool);
     }
 
-
-
-
     private PlayerCreator getOrInitCreator(Config config) {
         PlayerCreator creator = mConfigCreatorMap.get(config);
 
-        if(creator == null) {
+        if (creator == null) {
             creator = ArviPlugins.getPlayerCreatorFactory().create(this, config);
 
             mConfigCreatorMap.put(config, creator);
@@ -262,13 +216,10 @@ public final class PlayerProviderImpl implements PlayerProvider {
         return creator;
     }
 
-
-
-
     private PlayerNodePool getOrInitNodePool(PlayerCreator creator) {
         PlayerNodePool nodePool = mCreatorNodePoolMap.get(creator);
 
-        if(nodePool == null) {
+        if (nodePool == null) {
             nodePool = ArviPlugins.getPlayerNodePoolFactory().create();
 
             mCreatorNodePoolMap.put(creator, nodePool);
@@ -277,32 +228,20 @@ public final class PlayerProviderImpl implements PlayerProvider {
         return nodePool;
     }
 
-
-
-
     private PlayerNodePool getPoolForConfig(Config config) {
         final PlayerCreator creator = mConfigCreatorMap.get(config);
         return ((creator != null) ? mCreatorNodePoolMap.get(creator) : null);
     }
-
-
-
 
     private PlayerNodePool removePoolForConfig(Config config) {
         final PlayerCreator creator = mConfigCreatorMap.get(config);
         return ((creator != null) ? mCreatorNodePoolMap.remove(creator) : null);
     }
 
-
-
-
     @Override
     public final boolean hasPlayer(@NonNull String key) {
         return hasPlayer(DEFAULT_CONFIG, key);
     }
-
-
-
 
     @Override
     public final boolean hasPlayer(@NonNull Config config, @NonNull String key) {
@@ -312,16 +251,10 @@ public final class PlayerProviderImpl implements PlayerProvider {
         return (getPlayer(config, key) != null);
     }
 
-
-
-
     @Override
     public final void unregister(@NonNull String key) {
         unregister(DEFAULT_CONFIG, key);
     }
-
-
-
 
     @Override
     public final void unregister(@NonNull Config config, @NonNull String key) {
@@ -331,21 +264,15 @@ public final class PlayerProviderImpl implements PlayerProvider {
         // unregistering the Player within a corresponding pool (if there's any)
         final PlayerNodePool correspondingPool = getPoolForConfig(config);
 
-        if(correspondingPool != null) {
+        if (correspondingPool != null) {
             correspondingPool.unregister(key);
         }
     }
-
-
-
 
     @Override
     public final void release(@NonNull String key) {
         release(DEFAULT_CONFIG, key);
     }
-
-
-
 
     @Override
     public final void release(@NonNull Config config) {
@@ -354,13 +281,10 @@ public final class PlayerProviderImpl implements PlayerProvider {
         // releasing and removing the corresponding Player Node Pool (if there's any)
         final PlayerNodePool correspondingPool = removePoolForConfig(config);
 
-        if(correspondingPool != null) {
+        if (correspondingPool != null) {
             correspondingPool.release();
         }
     }
-
-
-
 
     @Override
     public final void release(@NonNull Config config, @NonNull String key) {
@@ -370,25 +294,19 @@ public final class PlayerProviderImpl implements PlayerProvider {
         // releasing the corresponding Player Node (if there's any)
         final PlayerNodePool correspondingPool = getPoolForConfig(config);
 
-        if(correspondingPool != null) {
+        if (correspondingPool != null) {
             correspondingPool.release(key);
         }
     }
 
-
-
-
     @Override
     public final void release() {
-        for(PlayerNodePool playerNodePool : mCreatorNodePoolMap.values()) {
+        for (PlayerNodePool playerNodePool : mCreatorNodePoolMap.values()) {
             playerNodePool.release();
         }
 
         mConfigCreatorMap.clear();
         mCreatorNodePoolMap.clear();
     }
-
-
-
 
 }

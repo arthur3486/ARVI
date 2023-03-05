@@ -22,6 +22,10 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.view.View;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.arthurivanets.arvi.widget.Playable;
 import com.google.android.exoplayer2.source.LoopingMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -30,15 +34,10 @@ import com.google.android.exoplayer2.upstream.cache.Cache;
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor;
 import com.google.android.exoplayer2.upstream.cache.SimpleCache;
 
-import androidx.annotation.FloatRange;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 /**
  * A set of utils specific to Exo Player.
  */
 public final class ExoPlayerUtils {
-
 
     /**
      * The default size of cache in bytes. (500MB in Bytes)
@@ -46,9 +45,6 @@ public final class ExoPlayerUtils {
     public static final long DEFAULT_CACHE_SIZE = (500 * 1024 * 1024);
 
     private static Cache sCache;
-
-
-
 
     /**
      * Creates/retrieves the {@link com.google.android.exoplayer2.ExoPlayer} {@link Cache} of the default
@@ -61,20 +57,17 @@ public final class ExoPlayerUtils {
         return getCache(context, DEFAULT_CACHE_SIZE);
     }
 
-
-
-
     /**
      * Creates/retrieves the {@link com.google.android.exoplayer2.ExoPlayer} {@link Cache} of the specified size.
      *
-     * @param context the context
+     * @param context   the context
      * @param cacheSize the desired cache size in bytes
      * @return the {@link com.google.android.exoplayer2.ExoPlayer} {@link Cache}
      */
     public static synchronized Cache getCache(@NonNull Context context, long cacheSize) {
         Preconditions.nonNull(context);
 
-        if(sCache == null) {
+        if (sCache == null) {
             sCache = new SimpleCache(
                 context.getCacheDir(),
                 new LeastRecentlyUsedCacheEvictor(cacheSize)
@@ -83,9 +76,6 @@ public final class ExoPlayerUtils {
 
         return sCache;
     }
-
-
-
 
     /**
      * Calculates the amount of the visibility of the {@link com.google.android.exoplayer2.ui.PlayerView}
@@ -100,7 +90,7 @@ public final class ExoPlayerUtils {
     public static float getVisibleAreaOffset(@NonNull Playable playable) {
         Preconditions.nonNull(playable);
 
-        if(playable.getParent() == null) {
+        if (playable.getParent() == null) {
             return 0f;
         }
 
@@ -114,16 +104,13 @@ public final class ExoPlayerUtils {
         final int drawArea = (drawRect.width() * drawRect.height());
         final boolean isVisible = playerView.getGlobalVisibleRect(playerRect, new Point());
 
-        if(isVisible && (drawArea > 0)) {
+        if (isVisible && (drawArea > 0)) {
             final int visibleArea = (playerRect.height() * playerRect.width());
             return (visibleArea / (float) drawArea);
         }
 
         return 0f;
     }
-
-
-
 
     /**
      * Determines whether the specified {@link MediaSource} is a looping one ({@link LoopingMediaSource}).
@@ -135,28 +122,22 @@ public final class ExoPlayerUtils {
         return (mediaSource instanceof LoopingMediaSource);
     }
 
-
-
-
     /**
      * Adds the {@link MediaSourceEventListener} to the specified {@link MediaSource} only if both
      * the specified {@link Handler} and {@link MediaSourceEventListener} are not null.
      *
      * @param mediaSource the media source
-     * @param handler the handler
-     * @param listener the listener to be added
+     * @param handler     the handler
+     * @param listener    the listener to be added
      */
     public static void addEventListenerIfNonNull(@NonNull MediaSource mediaSource,
                                                  @Nullable Handler handler,
                                                  @Nullable MediaSourceEventListener listener) {
         Preconditions.nonNull(mediaSource);
 
-        if((handler != null) && (listener != null)) {
+        if ((handler != null) && (listener != null)) {
             mediaSource.addEventListener(handler, listener);
         }
     }
-
-
-
 
 }

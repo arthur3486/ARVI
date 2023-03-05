@@ -19,17 +19,16 @@ package com.arthurivanets.arvi.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.arthurivanets.arvi.util.misc.Preconditions;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.arthurivanets.arvi.util.misc.Preconditions;
 
 /**
  * A model object used to represent the Video Playback-related Info.
  * (This info is, in most cases, used for proper handling of the {@link androidx.recyclerview.widget.RecyclerView}-specific Video Item Playbacks)
  */
 public final class PlaybackInfo implements Parcelable {
-
 
     private long playbackPosition;
     private long duration;
@@ -38,18 +37,12 @@ public final class PlaybackInfo implements Parcelable {
 
     private boolean isEnded;
 
-
-
-
     public PlaybackInfo() {
         this.playbackPosition = 0L;
         this.duration = 0L;
         this.volumeInfo = new VolumeInfo();
         this.isEnded = false;
     }
-
-
-
 
     public PlaybackInfo(@NonNull PlaybackInfo info) {
         Preconditions.nonNull(info);
@@ -60,18 +53,12 @@ public final class PlaybackInfo implements Parcelable {
         this.isEnded = info.isEnded;
     }
 
-
-
-
     private PlaybackInfo(Parcel in) {
         this.playbackPosition = in.readLong();
         this.duration = in.readLong();
         this.volumeInfo = in.readParcelable(VolumeInfo.class.getClassLoader());
         this.isEnded = (in.readByte() != 0);
     }
-
-
-
 
     /**
      * Sets the Video Playback Position (in milliseconds).
@@ -85,9 +72,6 @@ public final class PlaybackInfo implements Parcelable {
         return this;
     }
 
-
-
-
     /**
      * Retrieves the Video Playback Position (in milliseconds).
      *
@@ -96,9 +80,6 @@ public final class PlaybackInfo implements Parcelable {
     public final long getPlaybackPosition() {
         return this.playbackPosition;
     }
-
-
-
 
     /**
      * Sets the Video Duration (in milliseconds).
@@ -112,9 +93,6 @@ public final class PlaybackInfo implements Parcelable {
         return this;
     }
 
-
-
-
     /**
      * Retrieves the Video Duration (in milliseconds).
      *
@@ -123,9 +101,6 @@ public final class PlaybackInfo implements Parcelable {
     public final long getDuration() {
         return this.duration;
     }
-
-
-
 
     /**
      * Sets the Video Volume Info.
@@ -139,9 +114,6 @@ public final class PlaybackInfo implements Parcelable {
         return this;
     }
 
-
-
-
     /**
      * Retrieves the Video Volume Info.
      *
@@ -151,9 +123,6 @@ public final class PlaybackInfo implements Parcelable {
     public final VolumeInfo getVolumeInfo() {
         return this.volumeInfo;
     }
-
-
-
 
     /**
      * Sets the Video Playback Ended State.
@@ -167,9 +136,6 @@ public final class PlaybackInfo implements Parcelable {
         return this;
     }
 
-
-
-
     /**
      * Retrieves the Video Playback Ended State.
      *
@@ -178,9 +144,6 @@ public final class PlaybackInfo implements Parcelable {
     public final boolean isEnded() {
         return this.isEnded;
     }
-
-
-
 
     @Override
     public final int hashCode() {
@@ -194,24 +157,15 @@ public final class PlaybackInfo implements Parcelable {
         return result;
     }
 
-
-
-
     @Override
     public final boolean equals(@Nullable Object obj) {
         return ((obj instanceof PlaybackInfo) && (obj.hashCode() == hashCode()));
     }
 
-
-
-
     @Override
     public final int describeContents() {
         return 0;
     }
-
-
-
 
     @Override
     public final void writeToParcel(Parcel dest, int flags) {
@@ -220,9 +174,6 @@ public final class PlaybackInfo implements Parcelable {
         dest.writeParcelable(this.volumeInfo, flags);
         dest.writeByte(this.isEnded ? ((byte) 1) : ((byte) 0));
     }
-
-
-
 
     public static final Creator<PlaybackInfo> CREATOR = new ClassLoaderCreator<PlaybackInfo>() {
 
@@ -242,8 +193,5 @@ public final class PlaybackInfo implements Parcelable {
         }
 
     };
-
-
-
 
 }

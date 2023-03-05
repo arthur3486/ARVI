@@ -16,9 +16,9 @@
 
 package com.arthurivanets.arvi.util.cache;
 
-import com.arthurivanets.arvi.util.misc.Preconditions;
-
 import androidx.annotation.NonNull;
+
+import com.arthurivanets.arvi.util.misc.Preconditions;
 
 /**
  * A synchronized (thread-safe) implementation of the {@link Cache}.
@@ -30,130 +30,90 @@ import androidx.annotation.NonNull;
  */
 final class ConcurrentCache<K, V> implements Cache<K, V> {
 
-
     private final Object mLock;
 
     private final Cache<K, V> mCache;
-
-
-
 
     ConcurrentCache(@NonNull Cache<K, V> cache) {
         mLock = new Object();
         mCache = Preconditions.checkNonNull(cache);
     }
 
-
-
-
     @Override
     public final V put(K key, V value) {
-        synchronized(mLock) {
+        synchronized (mLock) {
             return mCache.put(key, value);
         }
     }
 
-
-
-
     @Override
     public final V get(K key) {
-        synchronized(mLock) {
+        synchronized (mLock) {
             return mCache.get(key);
         }
     }
 
-
-
-
     @Override
     public final V get(K key, V defaultValue) {
-        synchronized(mLock) {
+        synchronized (mLock) {
             return mCache.get(key, defaultValue);
         }
     }
 
-
-
-
     @Override
     public final <RV> RV getAs(K key) {
-        synchronized(mLock) {
+        synchronized (mLock) {
             return mCache.getAs(key);
         }
     }
 
-
-
-
     @Override
     public final <RV> RV getAs(K key, RV defaultValue) {
-        synchronized(mLock) {
+        synchronized (mLock) {
             return mCache.getAs(key, defaultValue);
         }
     }
 
-
-
-
     @Override
     public final V remove(K key) {
-        synchronized(mLock) {
+        synchronized (mLock) {
             return mCache.remove(key);
         }
     }
 
-
-
-
     @Override
     public final V remove(K key, V defaultValue) {
-        synchronized(mLock) {
+        synchronized (mLock) {
             return mCache.remove(key, defaultValue);
         }
     }
 
-
-
-
     @Override
     public final <RV> RV removeAs(K key) {
-        synchronized(mLock) {
+        synchronized (mLock) {
             return mCache.removeAs(key);
         }
     }
 
-
-
-
     @Override
     public final <RV> RV removeAs(K key, RV defaultValue) {
-        synchronized(mLock) {
+        synchronized (mLock) {
             return mCache.removeAs(key, defaultValue);
         }
     }
 
-
-
-
     @Override
     public final boolean contains(K key) {
-        synchronized(mLock) {
+        synchronized (mLock) {
             return mCache.contains(key);
         }
     }
 
-
-
-
     @Override
     public final boolean clear() {
-        synchronized(mLock) {
+        synchronized (mLock) {
             return mCache.clear();
         }
     }
-
-
-
 
 }

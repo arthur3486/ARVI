@@ -19,6 +19,8 @@ package com.arthurivanets.arvi.player.creators;
 import android.net.Uri;
 import android.os.Handler;
 
+import androidx.annotation.NonNull;
+
 import com.arthurivanets.arvi.Config;
 import com.arthurivanets.arvi.PlayerProvider;
 import com.arthurivanets.arvi.player.DefaultPlayer;
@@ -37,8 +39,6 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory;
 
-import androidx.annotation.NonNull;
-
 import static com.arthurivanets.arvi.util.misc.Preconditions.checkNonNull;
 
 /**
@@ -47,7 +47,6 @@ import static com.arthurivanets.arvi.util.misc.Preconditions.checkNonNull;
  * specific {@link Config}s.
  */
 public final class DefaultPlayerCreator implements PlayerCreator {
-
 
     public final PlayerProvider playerProvider;
 
@@ -58,9 +57,6 @@ public final class DefaultPlayerCreator implements PlayerCreator {
     private final RenderersFactory renderersFactory;
     private final DataSource.Factory mediaDataSourceFactory;
     private final DataSource.Factory manifestDataSourceFactory;
-
-
-
 
     public DefaultPlayerCreator(@NonNull PlayerProvider playerProvider, @NonNull Config config) {
         Preconditions.nonNull(playerProvider);
@@ -76,13 +72,10 @@ public final class DefaultPlayerCreator implements PlayerCreator {
         this.manifestDataSourceFactory = new DefaultDataSourceFactory(playerProvider.getContext(), playerProvider.getLibraryName());
     }
 
-
-
-
     private DataSource.Factory createDataSourceFactory(PlayerProvider playerProvider, Config config) {
         DataSource.Factory baseFactory = config.dataSourceFactory;
 
-        if(baseFactory == null) {
+        if (baseFactory == null) {
             baseFactory = new DefaultHttpDataSourceFactory(playerProvider.getLibraryName(), config.meter);
         }
 
@@ -92,15 +85,12 @@ public final class DefaultPlayerCreator implements PlayerCreator {
             baseFactory
         );
 
-        if(config.cache != null) {
+        if (config.cache != null) {
             factory = new CacheDataSourceFactory(config.cache, factory);
         }
 
         return factory;
     }
-
-
-
 
     @SuppressWarnings("unchecked")
     @NonNull
@@ -115,17 +105,11 @@ public final class DefaultPlayerCreator implements PlayerCreator {
         );
     }
 
-
-
-
     @NonNull
     @Override
     public final MediaSource createMediaSource(@NonNull Uri uri) {
         return createMediaSource(uri, "");
     }
-
-
-
 
     @NonNull
     @Override
@@ -144,9 +128,6 @@ public final class DefaultPlayerCreator implements PlayerCreator {
         );
     }
 
-
-
-
     @Override
     public final int hashCode() {
         final int prime = 31;
@@ -162,15 +143,9 @@ public final class DefaultPlayerCreator implements PlayerCreator {
         return result;
     }
 
-
-
-
     @Override
     public final boolean equals(Object obj) {
         return ((obj instanceof DefaultPlayerCreator) && (obj.hashCode() == hashCode()));
     }
-
-
-
 
 }

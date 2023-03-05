@@ -25,16 +25,14 @@ import com.arthurivanets.sample.R
 import com.arthurivanets.sample.model.Video
 
 class BasicVideoItemsRecyclerViewAdapter(
-    context : Context,
-    private val items : MutableList<Video>,
-    private val arviConfig : Config
+    context: Context,
+    private val items: MutableList<Video>,
+    private val arviConfig: Config
 ) : RecyclerView.Adapter<BasicVideoItemViewHolder>() {
-
 
     private val inflater = LayoutInflater.from(context)
 
-
-    override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : BasicVideoItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasicVideoItemViewHolder {
         return BasicVideoItemViewHolder(
             parent = parent,
             itemView = inflater.inflate(
@@ -46,20 +44,16 @@ class BasicVideoItemsRecyclerViewAdapter(
         )
     }
 
-
-    override fun onBindViewHolder(holder : BasicVideoItemViewHolder, position : Int) {
+    override fun onBindViewHolder(holder: BasicVideoItemViewHolder, position: Int) {
         holder.bindData(getItem(position))
     }
 
-
-    fun getItem(position : Int) : Video? {
-        return (if((position >= 0) && (position < itemCount)) items[position] else null)
+    fun getItem(position: Int): Video? {
+        return (if ((position >= 0) && (position < itemCount)) items[position] else null)
     }
 
-
-    override fun getItemCount() : Int {
+    override fun getItemCount(): Int {
         return items.size
     }
-
 
 }

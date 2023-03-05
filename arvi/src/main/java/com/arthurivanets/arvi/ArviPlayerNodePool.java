@@ -16,6 +16,9 @@
 
 package com.arthurivanets.arvi;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.arthurivanets.arvi.player.Player;
 import com.arthurivanets.arvi.util.misc.Preconditions;
 
@@ -25,9 +28,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import static com.arthurivanets.arvi.util.misc.CollectionUtils.toHashSet;
 
 /**
@@ -36,14 +36,10 @@ import static com.arthurivanets.arvi.util.misc.CollectionUtils.toHashSet;
  */
 final class ArviPlayerNodePool implements PlayerNodePool {
 
-
     private final int maxSize;
 
     private final Set<PlayerNode> playerNodeSet;
     private final Map<String, PlayerNode> keyPlayerNodeMap;
-
-
-
 
     ArviPlayerNodePool(int maxSize) {
         Preconditions.isTrue("You must specify a valid Pool Max Size.", (maxSize >= 0));
@@ -53,9 +49,6 @@ final class ArviPlayerNodePool implements PlayerNodePool {
         this.keyPlayerNodeMap = new HashMap<>();
     }
 
-
-
-
     @Override
     public final void add(@NonNull PlayerNode playerNode) {
         Preconditions.nonNull(playerNode);
@@ -63,9 +56,6 @@ final class ArviPlayerNodePool implements PlayerNodePool {
         this.playerNodeSet.add(playerNode);
         this.keyPlayerNodeMap.put(playerNode.getKey(), playerNode);
     }
-
-
-
 
     @Override
     public final void add(@NonNull String key, @NonNull Player player) {
@@ -75,17 +65,11 @@ final class ArviPlayerNodePool implements PlayerNodePool {
         add(new PlayerNode(player).setKey(key));
     }
 
-
-
-
     @Override
     public final PlayerNode remove(@NonNull PlayerNode playerNode) {
         Preconditions.nonNull(playerNode);
         return remove(playerNode.getKey());
     }
-
-
-
 
     @Override
     public final PlayerNode remove(@NonNull String key) {
@@ -93,7 +77,7 @@ final class ArviPlayerNodePool implements PlayerNodePool {
 
         final PlayerNode playerNode = this.keyPlayerNodeMap.remove(key);
 
-        if(playerNode != null) {
+        if (playerNode != null) {
             this.playerNodeSet.remove(playerNode);
             playerNode.removeKey();
         }
@@ -101,24 +85,18 @@ final class ArviPlayerNodePool implements PlayerNodePool {
         return playerNode;
     }
 
-
-
-
     @Override
     public final void unregister(@NonNull String key) {
         Preconditions.nonEmpty(key);
 
         final PlayerNode playerNode = get(key);
 
-        if(playerNode != null) {
+        if (playerNode != null) {
             unbind(playerNode, false);
         }
 
         this.keyPlayerNodeMap.remove(key);
     }
-
-
-
 
     @Nullable
     @Override
@@ -127,15 +105,12 @@ final class ArviPlayerNodePool implements PlayerNodePool {
 
         final PlayerNode freePlayerNode = acquireFree(key);
 
-        if(freePlayerNode != null) {
+        if (freePlayerNode != null) {
             return freePlayerNode;
         }
 
         return acquireOldest(key);
     }
-
-
-
 
     @Nullable
     @Override
@@ -144,7 +119,7 @@ final class ArviPlayerNodePool implements PlayerNodePool {
 
         final PlayerNode freePlayerNode = getFree();
 
-        if(freePlayerNode != null) {
+        if (freePlayerNode != null) {
             freePlayerNode.setKey(key);
             this.keyPlayerNodeMap.put(key, freePlayerNode);
         }
@@ -152,16 +127,13 @@ final class ArviPlayerNodePool implements PlayerNodePool {
         return freePlayerNode;
     }
 
-
-
-
     @Override
     public final PlayerNode acquireOldest(@NonNull String key) {
         Preconditions.nonEmpty(key);
 
         final PlayerNode playerNode = getOldest();
 
-        if(playerNode != null) {
+        if (playerNode != null) {
             unbind(playerNode, false);
             playerNode.setKey(key);
             this.keyPlayerNodeMap.put(key, playerNode);
@@ -170,23 +142,17 @@ final class ArviPlayerNodePool implements PlayerNodePool {
         return playerNode;
     }
 
-
-
-
     @Override
     public final void release(@NonNull PlayerNode playerNode) {
         Preconditions.nonNull(playerNode);
 
         unbind(playerNode, true);
 
-        if(playerNode.hasPlayer()) {
+        if (playerNode.hasPlayer()) {
             playerNode.getPlayer().release();
             playerNode.setPlayer(null);
         }
     }
-
-
-
 
     @Override
     public final void release(@NonNull String key) {
@@ -194,23 +160,17 @@ final class ArviPlayerNodePool implements PlayerNodePool {
 
         final PlayerNode playerNode = get(key);
 
-        if(playerNode != null) {
+        if (playerNode != null) {
             release(playerNode);
         }
     }
-
-
-
 
     @Override
     public final void release() {
-        for(PlayerNode playerNode : toHashSet(this.playerNodeSet)) {
+        for (PlayerNode playerNode : toHashSet(this.playerNodeSet)) {
             release(playerNode);
         }
     }
-
-
-
 
     @Override
     public final PlayerNode get(@NonNull String key) {
@@ -218,20 +178,17 @@ final class ArviPlayerNodePool implements PlayerNodePool {
 
         final PlayerNode playerNode = this.keyPlayerNodeMap.get(key);
 
-        if(playerNode != null) {
+        if (playerNode != null) {
             updateKey(playerNode, key);
         }
 
         return playerNode;
     }
 
-
-
-
     @Override
     public final PlayerNode getFree() {
-        for(PlayerNode playerNode : this.playerNodeSet) {
-            if(playerNode.hasPlayer()
+        for (PlayerNode playerNode : this.playerNodeSet) {
+            if (playerNode.hasPlayer()
                 && !playerNode.getPlayer().isAttached()
                 && !playerNode.isKeySet()
                 && !this.keyPlayerNodeMap.containsKey(playerNode.getKey())) {
@@ -242,68 +199,47 @@ final class ArviPlayerNodePool implements PlayerNodePool {
         return null;
     }
 
-
-
-
     @Override
     public final PlayerNode getOldest() {
         final PlayerNode playerNode = Collections.min(this.playerNodeSet);
         return ((playerNode != null) ? updateAccessTime(playerNode) : null);
     }
 
-
-
-
     @Override
     public final int getPlayerCount() {
         return this.playerNodeSet.size();
     }
-
-
-
 
     @Override
     public final boolean isFull() {
         return (getPlayerCount() == this.maxSize);
     }
 
-
-
-
     @Override
     public final boolean contains(@NonNull String key) {
         return (this.keyPlayerNodeMap.get(key) != null);
     }
 
-
-
-
     private void unbind(PlayerNode playerNode, boolean removeFromPool) {
         final Player player = playerNode.getPlayer();
 
-        if(player != null) {
+        if (player != null) {
             player.stop(false);
             player.postDetachedEvent();
             player.setAttachmentStateDelegate(null);
             player.removeAllEventListeners();
         }
 
-        if(playerNode.isKeySet() && removeFromPool) {
+        if (playerNode.isKeySet() && removeFromPool) {
             remove(playerNode.getKey());
         } else {
             playerNode.removeKey();
         }
     }
 
-
-
-
     private PlayerNode updateAccessTime(PlayerNode playerNode) {
         return playerNode.setLastAccessTime(System.currentTimeMillis());
     }
-
-
-
 
     private PlayerNode updateKey(PlayerNode playerNode, String key) {
         playerNode.setLastAccessTime(System.currentTimeMillis());
@@ -311,8 +247,5 @@ final class ArviPlayerNodePool implements PlayerNodePool {
 
         return playerNode;
     }
-
-
-
 
 }

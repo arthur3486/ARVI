@@ -19,11 +19,11 @@ package com.arthurivanets.arvi;
 import android.content.Context;
 import android.net.Uri;
 
-import com.arthurivanets.arvi.player.Player;
-import com.google.android.exoplayer2.source.MediaSource;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.arthurivanets.arvi.player.Player;
+import com.google.android.exoplayer2.source.MediaSource;
 
 /**
  * Defines a base contract for the concrete {@link PlayerProvider} implementations.
@@ -45,7 +45,7 @@ public interface PlayerProvider {
      * as a data source.
      * Uses the default {@link Player} {@link Config}.
      *
-     * @param uri the uri to create the media source for
+     * @param uri       the uri to create the media source for
      * @param isLooping whether to loop the video
      * @return the created media source
      */
@@ -56,7 +56,7 @@ public interface PlayerProvider {
      * Creates the a non-looping {@link MediaSource}. (See {@link #createMediaSource(Config, Uri, boolean)})
      *
      * @param config the player configuration
-     * @param uri the uri to created the media source for
+     * @param uri    the uri to created the media source for
      * @return the created media source
      */
     @NonNull
@@ -67,8 +67,8 @@ public interface PlayerProvider {
      * The created {@link MediaSource} can later be used with the {@link Player},
      * as a data source.
      *
-     * @param config the player configuration
-     * @param uri the uri to created the media source for
+     * @param config    the player configuration
+     * @param uri       the uri to created the media source for
      * @param isLooping whether to loop the video
      * @return the created media source
      */
@@ -105,7 +105,7 @@ public interface PlayerProvider {
      * Retrieves an existing {@link Player} instance for the specified key and Player {@link Config}, if there's any.
      *
      * @param config the player configuration
-     * @param key the key to retrieve the player for
+     * @param key    the key to retrieve the player for
      * @return the retrieved Player, or <strong>null</strong> if no Player was found.
      */
     @Nullable
@@ -125,7 +125,7 @@ public interface PlayerProvider {
      * Retrieves an existing or create a brand-new {@link Player} instance for the specified key and Player {@link Config}.
      *
      * @param config the player configuration
-     * @param key the key to retrieve the player for
+     * @param key    the key to retrieve the player for
      * @return the retrieved or created Player
      */
     @NonNull
@@ -144,7 +144,7 @@ public interface PlayerProvider {
      * Checks if there's a {@link Player} available for the specified key and Player {@link Config}.
      *
      * @param config the player configuration
-     * @param key the key to check the player presence for
+     * @param key    the key to check the player presence for
      * @return <strong>true</strong> if the player is available, <strong>false</strong> otherwise
      */
     boolean hasPlayer(@NonNull Config config, @NonNull String key);
@@ -161,7 +161,7 @@ public interface PlayerProvider {
      * Unregisters the {@link Player}, thus making it available within the Player Pool as a "free" Player.
      *
      * @param config the player configuration
-     * @param key the key to unregister the Player for
+     * @param key    the key to unregister the Player for
      */
     void unregister(@NonNull Config config, @NonNull String key);
 
@@ -184,7 +184,7 @@ public interface PlayerProvider {
      * Releases the {@link Player} for the specified key and {@link Config}.
      *
      * @param config the player configuration
-     * @param key the key to release the Player for
+     * @param key    the key to release the Player for
      */
     void release(@NonNull Config config, @NonNull String key);
 

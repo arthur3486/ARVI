@@ -18,6 +18,9 @@ package com.arthurivanets.arvi.player;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.arthurivanets.arvi.player.util.DefaultVolumeController;
 import com.arthurivanets.arvi.player.util.PlayerEventListenerRegistry;
 import com.arthurivanets.arvi.player.util.VolumeController;
@@ -31,9 +34,6 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import static com.arthurivanets.arvi.util.misc.Preconditions.checkNonNull;
 
 /**
@@ -42,24 +42,20 @@ import static com.arthurivanets.arvi.util.misc.Preconditions.checkNonNull;
  */
 public class DefaultPlayer implements Player {
 
-
     private final Context context;
 
-    private PlayerEventListenerRegistry eventHandler;
+    private final PlayerEventListenerRegistry eventHandler;
 
-    private RenderersFactory renderersFactory;
-    private TrackSelector trackSelector;
-    private LoadControl loadControl;
-    private BandwidthMeter bandwidthMeter;
+    private final RenderersFactory renderersFactory;
+    private final TrackSelector trackSelector;
+    private final LoadControl loadControl;
+    private final BandwidthMeter bandwidthMeter;
     private MediaSource mediaSource;
 
     private SimpleExoPlayer exoPlayer;
     private VolumeController volumeController;
 
     private AttachmentStateDelegate attachmentStateDelegate;
-
-
-
 
     public DefaultPlayer(@NonNull Context context,
                          @NonNull RenderersFactory renderersFactory,
@@ -74,9 +70,6 @@ public class DefaultPlayer implements Player {
         );
     }
 
-
-
-
     public DefaultPlayer(@NonNull Context context,
                          @NonNull RenderersFactory renderersFactory,
                          @NonNull TrackSelector trackSelector,
@@ -90,12 +83,9 @@ public class DefaultPlayer implements Player {
         this.bandwidthMeter = bandwidthMeter;
     }
 
-
-
-
     @Override
     public final void init() {
-        if(isInitialized()) {
+        if (isInitialized()) {
             return;
         }
 
@@ -109,9 +99,6 @@ public class DefaultPlayer implements Player {
         this.volumeController = new DefaultVolumeController(this.exoPlayer);
     }
 
-
-
-
     @Override
     public final void prepare(final boolean resetPosition) {
         checkPlayerState();
@@ -121,18 +108,12 @@ public class DefaultPlayer implements Player {
         this.exoPlayer.prepare();
     }
 
-
-
-
     @Override
     public final void play() {
         checkPlayerState();
 
         this.exoPlayer.setPlayWhenReady(true);
     }
-
-
-
 
     @Override
     public final void pause() {
@@ -141,18 +122,12 @@ public class DefaultPlayer implements Player {
         this.exoPlayer.setPlayWhenReady(false);
     }
 
-
-
-
     @Override
     public final void stop(final boolean resetPosition) {
         checkPlayerState();
 
         this.exoPlayer.stop(resetPosition);
     }
-
-
-
 
     @Override
     public final void seek(final long positionInMillis) {
@@ -161,12 +136,9 @@ public class DefaultPlayer implements Player {
         this.exoPlayer.seekTo(positionInMillis);
     }
 
-
-
-
     @Override
     public final void release() {
-        if(!isInitialized()) {
+        if (!isInitialized()) {
             return;
         }
 
@@ -177,9 +149,6 @@ public class DefaultPlayer implements Player {
         removeAllEventListeners();
     }
 
-
-
-
     @Override
     public final void attach(@NonNull final PlayerView playerView) {
         Preconditions.nonNull(playerView);
@@ -187,9 +156,6 @@ public class DefaultPlayer implements Player {
 
         playerView.setPlayer(this.exoPlayer);
     }
-
-
-
 
     @Override
     public final void detach(@NonNull PlayerView playerView) {
@@ -199,54 +165,36 @@ public class DefaultPlayer implements Player {
         playerView.setPlayer(null);
     }
 
-
-
-
     @Override
     public final void postAttachedEvent() {
-        if(this.attachmentStateDelegate != null) {
+        if (this.attachmentStateDelegate != null) {
             this.attachmentStateDelegate.onAttach(this);
         }
     }
 
-
-
-
     @Override
     public final void postDetachedEvent() {
-        if(this.attachmentStateDelegate != null) {
+        if (this.attachmentStateDelegate != null) {
             this.attachmentStateDelegate.onDetach(this);
         }
     }
 
-
-
-
     private void checkPlayerState() {
-        if(!isInitialized()) {
+        if (!isInitialized()) {
             throw new IllegalStateException("The Player must be initialized first.");
         }
     }
 
-
-
-
     private void checkMediaSource() {
-        if(this.mediaSource == null) {
+        if (this.mediaSource == null) {
             throw new IllegalStateException("The Media Source is required.");
         }
     }
-
-
-
 
     @Override
     public final void setAttachmentStateDelegate(@Nullable AttachmentStateDelegate attachmentStateDelegate) {
         this.attachmentStateDelegate = attachmentStateDelegate;
     }
-
-
-
 
     @Override
     public final void addEventListener(@NonNull EventListener eventListener) {
@@ -255,9 +203,6 @@ public class DefaultPlayer implements Player {
         this.eventHandler.addListener(eventListener);
     }
 
-
-
-
     @Override
     public final void removeEventListener(@NonNull EventListener eventListener) {
         Preconditions.nonNull(eventListener);
@@ -265,33 +210,21 @@ public class DefaultPlayer implements Player {
         this.eventHandler.removeListener(eventListener);
     }
 
-
-
-
     @Override
     public final void removeAllEventListeners() {
         this.eventHandler.removeAllListeners();
     }
-
-
-
 
     @Override
     public final void setMediaSource(@NonNull MediaSource mediaSource) {
         this.mediaSource = checkNonNull(mediaSource);
     }
 
-
-
-
     @Nullable
     @Override
     public final MediaSource getMediaSource() {
         return this.mediaSource;
     }
-
-
-
 
     @NonNull
     @Override
@@ -300,56 +233,35 @@ public class DefaultPlayer implements Player {
         return this.volumeController;
     }
 
-
-
-
     @Override
     public final int getPlaybackState() {
         return (isInitialized() ? this.exoPlayer.getPlaybackState() : PlaybackState.IDLE);
     }
-
-
-
 
     @Override
     public final long getPlaybackPosition() {
         return (isInitialized() ? this.exoPlayer.getCurrentPosition() : 0L);
     }
 
-
-
-
     @Override
     public final long getDuration() {
         return (isInitialized() ? this.exoPlayer.getDuration() : 0L);
     }
-
-
-
 
     @Override
     public final float getBufferedPercentage() {
         return (isInitialized() ? this.exoPlayer.getBufferedPercentage() : 0L);
     }
 
-
-
-
     @Override
     public final boolean isLooping() {
         return ExoPlayerUtils.isLooping(this.mediaSource);
     }
 
-
-
-
     @Override
     public final boolean isInitialized() {
         return (this.exoPlayer != null);
     }
-
-
-
 
     @Override
     public final boolean isPlaying() {
@@ -357,14 +269,11 @@ public class DefaultPlayer implements Player {
 
         return (
             isInitialized()
-            && this.exoPlayer.getPlayWhenReady()
-            && (playbackState != PlaybackState.IDLE)
-            && ((playbackState != PlaybackState.ENDED) || isLooping())
+                && this.exoPlayer.getPlayWhenReady()
+                && (playbackState != PlaybackState.IDLE)
+                && ((playbackState != PlaybackState.ENDED) || isLooping())
         );
     }
-
-
-
 
     @Override
     public final boolean isAttached(@NonNull PlayerView playerView) {
@@ -372,15 +281,9 @@ public class DefaultPlayer implements Player {
         return ((playerView.getPlayer() != null) && (playerView.getPlayer() == this.exoPlayer));
     }
 
-
-
-
     @Override
     public final boolean isAttached() {
         return ((this.attachmentStateDelegate != null) && this.attachmentStateDelegate.isAttached(this));
     }
-
-
-
 
 }

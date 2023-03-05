@@ -20,6 +20,6 @@ import android.content.Context
 
 interface HasTitle {
 
-    fun getTitle(context : Context) : CharSequence
+    fun getTitle(context: Context): CharSequence
 
 }

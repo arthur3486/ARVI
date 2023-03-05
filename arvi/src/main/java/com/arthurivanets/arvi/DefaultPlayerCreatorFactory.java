@@ -16,17 +16,16 @@
 
 package com.arthurivanets.arvi;
 
+import androidx.annotation.NonNull;
+
 import com.arthurivanets.arvi.player.creators.DefaultPlayerCreator;
 import com.arthurivanets.arvi.player.creators.PlayerCreator;
 import com.arthurivanets.arvi.util.misc.Preconditions;
-
-import androidx.annotation.NonNull;
 
 /**
  * A default implementation of the {@link PlayerCreatorFactory}.
  */
 public final class DefaultPlayerCreatorFactory implements PlayerCreatorFactory {
-
 
     @NonNull
     @Override
@@ -36,6 +35,5 @@ public final class DefaultPlayerCreatorFactory implements PlayerCreatorFactory {
 
         return new DefaultPlayerCreator(playerProvider, config);
     }
-
 
 }

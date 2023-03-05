@@ -19,4 +19,4 @@ package com.arthurivanets.sample.adapters.videos
 import androidx.fragment.app.FragmentManager
 import com.arthurivanets.sample.adapters.base.BaseViewPagerAdapter
 
-class VideosViewPagerAdapter(fragmentManager : FragmentManager) : BaseViewPagerAdapter(fragmentManager)
+class VideosViewPagerAdapter(fragmentManager: FragmentManager) : BaseViewPagerAdapter(fragmentManager)

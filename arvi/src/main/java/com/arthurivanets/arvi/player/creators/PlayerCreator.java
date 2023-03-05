@@ -18,10 +18,10 @@ package com.arthurivanets.arvi.player.creators;
 
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+
 import com.arthurivanets.arvi.player.Player;
 import com.google.android.exoplayer2.source.MediaSource;
-
-import androidx.annotation.NonNull;
 
 /**
  * A base contract to be implemented by the concrete implementations
@@ -50,7 +50,7 @@ public interface PlayerCreator {
     /**
      * Creates a {@link MediaSource} for the specified {@link Uri} and extension.
      *
-     * @param uri the media uri
+     * @param uri       the media uri
      * @param extension the media extension
      * @return the created {@link MediaSource}
      */

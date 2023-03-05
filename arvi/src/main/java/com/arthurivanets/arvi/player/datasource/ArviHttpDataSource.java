@@ -26,18 +26,11 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
  */
 public class ArviHttpDataSource extends DefaultHttpDataSource {
 
-
     private RequestAuthorizer requestAuthorizer;
-
-
-
 
     public ArviHttpDataSource(String userAgent) {
         super(userAgent);
     }
-
-
-
 
     public ArviHttpDataSource(String userAgent,
                               int connectTimeoutMillis,
@@ -48,9 +41,6 @@ public class ArviHttpDataSource extends DefaultHttpDataSource {
             readTimeoutMillis
         );
     }
-
-
-
 
     public ArviHttpDataSource(String userAgent,
                               int connectTimeoutMillis,
@@ -66,27 +56,18 @@ public class ArviHttpDataSource extends DefaultHttpDataSource {
         );
     }
 
-
-
-
     public final ArviHttpDataSource setRequestAuthorizer(RequestAuthorizer requestAuthorizer) {
         this.requestAuthorizer = requestAuthorizer;
         return this;
     }
 
-
-
-
     @Override
     public final long open(DataSpec dataSpec) throws HttpDataSourceException {
-        if(requestAuthorizer != null) {
+        if (requestAuthorizer != null) {
             setRequestProperty(HttpHeaders.AUTHORIZATION, requestAuthorizer.getAuthorization());
         }
 
         return super.open(dataSpec);
     }
-
-
-
 
 }
